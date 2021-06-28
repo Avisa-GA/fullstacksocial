@@ -6,23 +6,25 @@ export default function Login() {
 
 return (
 <div className="login">
-    <h6 style={{fontWeight: "bold"}}>Log in to your account</h6>
+    <div style={{padding: "20%"}} className="card">
+    <h6 style={{fontWeight: "bold", marginBottom: "25%"}}>Log in to your account</h6>
     <form>
         <div className="email">
-            <input id="email" type="email" class="validate" placeholder="Email" />
+            <input style={{fontSize: "12px"}} id="email" type="email" class="validate" placeholder="Email" />
         </div>
         <div className="password">
-            <input id="password" type="password" class="validate" placeholder="Password" />
+            <input style={{fontSize: "12px"}} id="password" type="password" class="validate" placeholder="Password" />
         </div>
         <div className="submit">
-            <Link to="/posts" style={{width: "100%", marginTop: "5%"}} className="waves-effect waves-light btn">Login
+            <Link to="/posts" style={{width: "100%", marginTop: "5%", fontSize: "12px"}} className="waves-effect waves-light btn">Login
             </Link>
         </div>
     </form>
-    <div className="signup">
+    <div style={{fontSize: "12px"}} className="signup">
         <p>Don't have an account?
             <Link to="/signup">Signup</Link>
         </p>
+    </div>
     </div>
 </div>
 )
