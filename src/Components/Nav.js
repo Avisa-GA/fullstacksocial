@@ -12,11 +12,11 @@ export default function Nav() {
 return (
 <div className="nav">
   <nav className="pink darken-4">
-  
-          <Link style={{marginRight: "10%"}} className="brand-logo right"> 🚀 </Link>
         
     <div style={{marginLeft: "5%", marginRight: "5%"}} className="nav-wrapper fixed left">
+    <Link style={{marginLeft: "550%"}} className="brand-logo left"> 🚀 </Link>
       <ul>
+       
         <li>
           <Link to="/" style={{marginLeft: "500%"}} className="brand-logo left">
           <ExitToAppIcon />
