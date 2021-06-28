@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, {useState} from 'react';
+import {Link} from "react-router-dom";
 
 function Signup() {
 
@@ -26,7 +27,9 @@ function Signup() {
                 
                     <input type="text" name="password" id="password" placeholder="Password" onChange={e => setDetails({...details, password: e.target.value})} value={details.password}/>
                 </div>
-                <input style={{marginTop: "5%", width: "100%"}} className="waves-effect waves-light btn" type="submit" value="Signup" />
+                {/* <input style={{marginTop: "5%", width: "100%"}} className="waves-effect waves-light btn" type="submit" value="Signup" /> */}
+                <Link to="/posts" style={{width: "100%", marginTop: "5%"}} className="waves-effect waves-light btn">Signup
+            </Link>
             </div>
         </form>
     )
