@@ -15,12 +15,12 @@ return (
         <div className="password">
             <input style={{fontSize: "12px"}} id="password" type="password" class="validate" placeholder="Password" />
         </div>
-        <div className="submit">
+        <div style={{marginTop: "5%"}} className="submit">
             <Link to="/posts" style={{width: "100%", marginTop: "5%", fontSize: "12px"}} className="waves-effect waves-light btn">Login
             </Link>
         </div>
     </form>
-    <div style={{fontSize: "12px"}} className="signup">
+    <div style={{fontSize: "12px", marginTop: "10%"}} className="signup">
         <p>Don't have an account?
             <Link to="/signup">Signup</Link>
         </p>
