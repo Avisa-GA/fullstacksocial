@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import Divider from '@material-ui/core/Divider';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import CommentIcon from '@material-ui/icons/Comment';
 
 function rand() {
 return Math.round(Math.random() * 20) - 10;
@@ -21,7 +24,7 @@ transform: `translate(-${top}%, -${left}%)`,
 const useStyles = makeStyles((theme) => ({
 paper: {
 position: 'absolute',
-width: 400,
+width: 425,
 backgroundColor: theme.palette.background.paper,
 border: '2px solid #000',
 boxShadow: theme.shadows[5],
@@ -45,17 +48,28 @@ setOpen(false);
 
 const body = (
 <div style={modalStyle} className={classes.paper}>
-  <h2 id="simple-modal-title">Text in a modal</h2>
-  <p id="simple-modal-description">
-    Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-  </p>
+  
+<div style={{width: "700px", marginTop: "7%", marginLeft: "1%"}} class="row">
+    <div class="col s12 m6">
+      <div class="card pink darken-4">
+        <div class="card-content white-text">
+          <p>Are you sure you want to delete?</p>
+        </div>
+        <div class="card-action">
+        <a href="#">Cancel</a>
+          <a href="#">Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <Modal />
 </div>
 );
 
 
 return (
-<div style={{marginLeft: "20%", marginTop: "10%"}} className="card">
+<div style={{marginLeft: "20%", marginTop: "10%"}} className="home-card">
   <ul className="collection">
     <li className="collection-item avatar">
       <div>
@@ -69,9 +83,20 @@ return (
       </div>
       <img src="" alt="" className="circle" style={{backgroundColor: "red"}} />
       <section style={{display:"grid", justifyContent: "left"}} className="headline">
-        <span style={{marginRight: "50%"}} className="title">Hiker</span>
+        <span style={{marginRight: "50%", fontWeight: "bold"}} className="title">Hiker</span>
         <span className="date">6 days ago</span>
       </section>
+      <br />
+      <Divider />
+      <br />
+      <section className="left-align">
+        <p>default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+        <img src="https://i.imgur.com/TV17EgP.jpg" title="source: imgur.com" style={{width: "600px", height: "400px", marginTop: "2%"}}/>
+      </section>
+      <form className="left-align" style={{height: "25px"}}>
+          <button style={{borderStyle: "none", backgroundColor: "white", color: "lightgray"}}><FavoriteIcon /></button>
+          <button style={{borderStyle: "none", backgroundColor: "white", color: "lightgray"}}><CommentIcon /></button>
+      </form>
     </li>
   </ul>
 
