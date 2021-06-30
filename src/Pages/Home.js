@@ -1,80 +1,80 @@
-import React from "react";
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import Modal from '@material-ui/core/Modal';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import CommentIcon from '@material-ui/icons/Comment';
 
+function rand() {
+return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+const top = 50 + rand();
+const left = 50 + rand();
+
+return {
+top: `${top}%`,
+left: `${left}%`,
+transform: `translate(-${top}%, -${left}%)`,
+};
+}
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-      maxWidth: 500,
-    },
-    media: {
-      height: 0,
-      paddingTop: '56.25%', // 16:9
-    },
-    expand: {
-      transform: 'rotate(0deg)',
-      marginLeft: 'auto',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
-    },
-    expandOpen: {
-      transform: 'rotate(180deg)',
-    },
-    avatar: {
-      backgroundColor: red[500],
-    },
-  }));
+paper: {
+position: 'absolute',
+width: 400,
+backgroundColor: theme.palette.background.paper,
+border: '2px solid #000',
+boxShadow: theme.shadows[5],
+padding: theme.spacing(2, 4, 3),
+},
+}));
 
 export default function Home() {
-    const classes = useStyles();
-    
-    return (
-      <Card style={{marginLeft: "50%", marginTop: "10%"}} className={classes.root}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="recipe" className={classes.avatar}>
-              R
-            </Avatar>
-          }
-          action={
-            <IconButton aria-label="delete">
-              <HighlightOffIcon />
-            </IconButton>
-          }
-          title="hiker"
-          subheader="posted 6 days ago"
-        />
-        <CardMedia
-          className={classes.media}
-          image="/static/images/cards/paella.jpg"
-          title="Paella dish"
-        />
-        <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
-            This impressive paella is a perfect party dish and a fun meal to cook together with your
-            guests. Add 1 cup of frozen peas along with the mussels, if you like.
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="share">
-            <CommentIcon />
-          </IconButton>
-         </CardActions>
-      </Card>
-    );
-}
+const classes = useStyles();
+// getModalStyle is not a pure function, we roll the style only on the first render
+const [modalStyle] = React.useState(getModalStyle);
+const [open, setOpen] = React.useState(false);
+
+const handleOpen = () => {
+setOpen(true);
+};
+
+const handleClose = () => {
+setOpen(false);
+};
+
+const body = (
+<div style={modalStyle} className={classes.paper}>
+  <h2 id="simple-modal-title">Text in a modal</h2>
+  <p id="simple-modal-description">
+    Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+  </p>
+  <Modal />
+</div>
+);
+
+
+return (
+<div style={{marginLeft: "20%", marginTop: "10%"}} className="card">
+  <ul className="collection">
+    <li className="collection-item avatar">
+      <div>
+        <button style={{borderStyle: "none", backgroundColor: "white", color: "lightgray", marginLeft: "95%"}} type="button" onClick={handleOpen}>
+        <HighlightOffIcon />
+        </button>
+        <Modal open={open} onClose={handleClose} aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description">
+          {body}
+        </Modal>
+      </div>
+      <img src="" alt="" className="circle" style={{backgroundColor: "red"}} />
+      <section style={{display:"grid", justifyContent: "left"}} className="headline">
+        <span style={{marginRight: "50%"}} className="title">Hiker</span>
+        <span className="date">6 days ago</span>
+      </section>
+    </li>
+  </ul>
+
+</div>
+);
+};

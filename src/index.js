@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+// IMPORT SCSS FILE TO BE SOURCE OF STYLING
+import "./styles.scss";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 //IMPORT BrowserRouter and rename it to Router
