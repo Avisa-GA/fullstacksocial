@@ -5,6 +5,7 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Divider from '@material-ui/core/Divider';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import CommentIcon from '@material-ui/icons/Comment';
+import EditIcon from '@material-ui/icons/Edit';
 
 function rand() {
 return Math.round(Math.random() * 20) - 10;
@@ -70,6 +71,9 @@ const body = (
 
 return (
 <div style={{marginLeft: "20%", marginTop: "10%"}} className="home-card">
+  <div style={{height: "60px"}} className="card">
+    <button className="center-align" style={{borderStyle: "none", backgroundColor: "white", marginTop: "2%", fontWeight: "bolder", color: "gray"}}><EditIcon/> Create Post</button>
+  </div>
   <ul className="collection">
     <li className="collection-item avatar">
       <div>
