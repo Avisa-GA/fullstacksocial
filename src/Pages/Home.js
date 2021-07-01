@@ -90,7 +90,6 @@ const loaded = () => {
     <ul className="collection">
       <li className="collection-item">
         {/* ************************* DELETE  */}
-       
         <button style={{backgroundColor: "white", borderStyle: "none", color: "gray", marginLeft: "95%"}} onClick={handleOpen} ><HighlightOffIcon /></button>
         <Modal
         open={open}
@@ -102,7 +101,7 @@ const loaded = () => {
       </Modal>
       {/* *********************************** */}
     <div key={post._id} className="post">
-    <p className="left-align">{post.text}</p>
+    <p className="left-align" >{post.text}</p>
     <div className="card-image center-align">
       <img src={post.imageUrl}/>
       </div>
