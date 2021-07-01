@@ -89,6 +89,18 @@ const loaded = () => {
   return posts.map((post) => (
     <ul className="collection">
       <li className="collection-item">
+        {/* ************************* DELETE  */}
+       
+        <button style={{backgroundColor: "white", borderStyle: "none", color: "gray", marginLeft: "95%"}} onClick={handleOpen} ><HighlightOffIcon /></button>
+        <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {deleteBody}
+      </Modal>
+      {/* *********************************** */}
     <div key={post._id} className="post">
     <p className="left-align">{post.text}</p>
     <div className="card-image center-align">
