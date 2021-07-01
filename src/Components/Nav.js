@@ -10,9 +10,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
-import MenuIcon from '@material-ui/icons/Menu';
-import { func } from "prop-types";
+import MenuBookIcon from '@material-ui/icons/MenuBook';
 
 const useStyles = makeStyles(theme => ({
   menuButton: {
@@ -36,7 +34,7 @@ export default function Nav() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" className="pink darken-2">
       <Toolbar>
         <IconButton
           edge="start"
@@ -44,26 +42,26 @@ export default function Nav() {
           aria-label="menu"
           className={classes.menuButton}
         >
-          🚀
+          <MenuBookIcon style={{fontSize: "50px", color: "rgb(251, 224, 233)"}}/>
         </IconButton>
         <Typography className={classes.title}>
         <Link to="/posts/home">
-         <HomeIcon />
+         <HomeIcon style={{color: "white"}} />
          </Link>
         </Typography >
         <Typography className={classes.title}>
         <Link to="/posts/search">
-          <SearchIcon />
+          <SearchIcon style={{color: "white"}}/>
            </Link>
 </Typography>
 <Typography className={classes.title}>
 <Link to="/posts/profile">
-          <PersonIcon />
+          <PersonIcon style={{color: "white"}}/>
            </Link>
 </Typography>
 <Typography className={classes.title}>
 <Link to="/" >
-         <ExitToAppIcon />
+         <ExitToAppIcon style={{color: "white"}}/>
            </Link>
 </Typography>
       </Toolbar>
