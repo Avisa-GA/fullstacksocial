@@ -14,11 +14,19 @@ export default function Main(props) {
 
   const URL = "https://social-full-backend.herokuapp.com/post/"
 
-  // SHOW ALL
+  // *************** SHOW ALL
   const getPosts = async () => {
       const response = await fetch(URL);
       const data = await response.json();     
       setPosts(data);
+  };
+
+  // **************** DELETE POST
+  const deletePost= async id => {
+     await fetch(URL + id, {
+       method: "DELETE",
+     })
+     getPosts();
   };
 
  // when app run, already reload data
@@ -32,9 +40,9 @@ return (
         </Route>
         <Route path="/posts">
             <Nav />
-            <Route path="/posts/home">
-              <Home posts={posts} />
-            </Route>
+            <Route path="/posts/home" render={rp => (
+               <Home posts={posts} deletePost={deletePost} {...rp}/>
+            )} />
             <Route path="/posts/search">
               <Search />
             </Route>

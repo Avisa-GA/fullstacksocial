@@ -6,6 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import CommentIcon from '@material-ui/icons/Comment';
 import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 function rand() {
 return Math.round(Math.random() * 20) - 10;
@@ -33,21 +34,28 @@ padding: theme.spacing(2, 4, 3),
 },
 }));
 
-export default function Home({posts}) {
+export default function Home({posts, deletePost, history}) {
   // ************************* Modal
 const classes = useStyles();
 // getModalStyle is not a pure function, we roll the style only on the first render
 const [modalStyle] = React.useState(getModalStyle);
 const [open, setOpen] = React.useState(false);
+const [id, setId] = useState(null);
 
 const handleOpen = () => {
 setOpen(true);
 };
 
-const handleClose = () => {
+const handleClose = (id) => {
 setOpen(false);
 };
 
+const handleDelete = id => {
+  deletePost(id);
+  history.push('/posts/home');
+}
+
+console.log('heeey', id)
 const deleteBody = (
 <div style={modalStyle} className={classes.paper}>
   
@@ -59,7 +67,7 @@ const deleteBody = (
         </div>
         <div className="card-action">
         <a href="#">Cancel</a>
-          <a href="#">Delete</a>
+          <a>Delete</a>
         </div>
       </div>
     </div>
@@ -90,15 +98,7 @@ const loaded = () => {
     <ul className="collection">
       <li className="collection-item">
         {/* ************************* DELETE  */}
-        <button style={{backgroundColor: "white", borderStyle: "none", color: "gray", marginLeft: "95%"}} onClick={handleOpen} ><HighlightOffIcon /></button>
-        <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        {deleteBody}
-      </Modal>
+        <button style={{backgroundColor: "white", borderStyle: "none", color: "rgb(228, 32, 88)", marginLeft: "95%"}} onClick={() => handleDelete(post._id)} ><DeleteIcon /></button>
       {/* *********************************** */}
     <div key={post._id} className="post">
     <p className="left-align" >{post.text}</p>
@@ -113,7 +113,7 @@ const loaded = () => {
 
 
 return (
-<div style={{marginLeft: "20%", marginTop: "10%"}} className="home">
+<div style={{marginLeft: "20%", marginTop: "10%", width: "600px"}} className="home">
   { posts ? loaded() : loading() }
   
 </div>
