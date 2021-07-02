@@ -36,10 +36,10 @@ return (
 <div className="main">
     <Switch>
         <Route exact path="/">
-            <Login />
+            <Login user={props.user}/>
         </Route>
         <Route path="/posts">
-            <Nav />
+            <Nav user={props.user} />
             <Route path="/posts/home" render={rp => (
                <Home posts={posts} deletePost={deletePost} {...rp}/>
             )} />
@@ -51,7 +51,7 @@ return (
             </Route>
         </Route>
         <Route to="/signup">
-            <Signup />
+            <Signup user={props.user} />
         </Route>
     </Switch>
 </div>
