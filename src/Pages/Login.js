@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {login} from '../services/firebase';
 
-export default function Login() {
+export default function Login(props) {
 
 
 return (
@@ -16,7 +17,7 @@ return (
             <input style={{fontSize: "12px"}} id="password" type="password" class="validate" placeholder="Password" />
         </div>
         <div style={{marginTop: "5%"}} className="submit">
-            <Link to="/posts" style={{width: "100%", marginTop: "5%", fontSize: "12px"}} className="waves-effect waves-light btn">Login
+            <Link onClick={login} to="/posts" style={{width: "100%", marginTop: "5%", fontSize: "12px"}} className="waves-effect waves-light btn">Login
             </Link>
         </div>
     </form>
