@@ -11,7 +11,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
-
 const useStyles = makeStyles(theme => ({
   menuButton: {
     marginRight: theme.spacing(2),
@@ -21,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Nav() {
+export default function Nav(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -61,7 +60,7 @@ export default function Nav() {
 </Typography>
 <Typography className={classes.title}>
 <Link to="/" >
-         <ExitToAppIcon style={{color: "white"}}/>
+         <button style={{borderStyle: "none", backgroundColor: "rgb(185, 26, 80)"}}><ExitToAppIcon style={{color: "white"}}/></button>
            </Link>
 </Typography>
       </Toolbar>
