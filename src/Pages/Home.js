@@ -16,8 +16,11 @@ text: "",
 imageUrl: ""
 });
 
+
+
 // HandleChange function for form
 const handleChange = (event) => {
+ 
 setNewPost({ ...newPost, [event.target.name]: event.target.value});
 };
 
@@ -40,7 +43,7 @@ history.push('/posts/home');
 
 // ************************************************ Show
 const loading = () => {
-return ( <div className="preloader-wrapper active">
+return ( <div style={{marginRight: "5%"}} className="preloader-wrapper active">
   <div className="spinner-layer spinner-red-only">
     <div className="circle-clipper left">
       <div className="circle"></div>
@@ -74,7 +77,7 @@ return posts.map((post) => (
     <div key={post._id} className="post">
       <p style={{fontSize: 12}} className="left-align">{post.text}</p>
       <div className="card-image center-align">
-        <img src={post.imageUrl} />
+        <img src={post.imageUrl} alt="" />
       </div>
     </div>
   </li>
@@ -94,7 +97,7 @@ return (
         <div className="btn pink darken-2">
           <span style={{fontSize: 24}}>
             <ImageIcon /></span>
-          <input type="image" name="imageUrl" value={newPost.imageUrl} onChange={handleChange} />
+          <input type="file" name="imageUrl" alt="" value={newPost.imageUrl} onChange={handleChange} />
         </div>
         <div className="file-path-wrapper">
           <input type="text" className="file-path validate" />
@@ -106,6 +109,7 @@ return (
   <br />
   <br />
   <br />
+  {/* {loaded()} */}
   { posts ? loaded() : loading() }
 
 </div>
