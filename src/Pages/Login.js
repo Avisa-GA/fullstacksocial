@@ -13,7 +13,9 @@ return (
     <AppBar position="static" className="pink darken-2">
         <Toolbar>
             <Typography>
+            <Link style={{color: "white"}} to="/posts">
                 Welcome to Social Web
+                </Link>
             </Typography>
         </Toolbar>
     </AppBar>
