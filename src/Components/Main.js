@@ -41,7 +41,7 @@ return (
         <Route path="/posts">
             <Nav user={props.user} />
             <Route path="/posts/home" render={rp => (
-               <Home posts={posts} deletePost={deletePost} {...rp}/>
+               <Home posts={posts} user={props.user} deletePost={deletePost} {...rp}/>
             )} />
             <Route path="/posts/search">
               <Search />
