@@ -20,10 +20,12 @@ return (
        {
            props.user ?
            
-       <button onClick={logout} style={{marginTop: "5%", width: 200, height: 200, borderRadius: "50%", marginRight: "2%", fontSize:35, cursor: "pointer"}} className="waves-effect waves-light btn pink darken-2"><Link style={{color: "white"}} to="/">Logout</Link></button>
+           <Link style={{color: "white"}} to="/"><button onClick={logout} style={{marginTop: "5%", width: 200, height: 200, borderRadius: "50%", marginRight: "2%", fontSize:35, cursor: "pointer"}} className="waves-effect waves-light btn pink darken-2">Logout</button></Link>
      
        :
-       <button onClick={login} style={{marginTop: "5%", width: 200, height: 200, borderRadius: "50%", marginRight: "2%", fontSize:35, cursor: "pointer"}} className="waves-effect waves-light btn"><Link style={{color: "white"}} to="/posts">Login</Link></button>
+     
+       <Link style={{color: "white"}} to="/posts/home"><button onClick={login} style={{marginTop: "5%", width: 200, height: 200, borderRadius: "50%", marginRight: "2%", fontSize:35, cursor: "pointer"}} className="waves-effect waves-light btn">Login</button></Link>
+     
        }
 </div>
 

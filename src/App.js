@@ -15,9 +15,10 @@ return () => {
 }; // cleanup effect
 }, []);
 
+console.log("I am here:", user)
 return (
 <div className="App">
- <Main user={user} />
+ <Main user={user}/>
 </div>
 );
 }
