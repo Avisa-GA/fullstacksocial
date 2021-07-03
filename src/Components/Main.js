@@ -29,6 +29,16 @@ export default function Main(props) {
      getPosts();
   };
 
+  // ***************** CREATE POST
+  const createPost = async (post) => {
+      await fetch(URL, {
+        method: "POST",
+        enctype: "multipart/form-data",
+        body: JSON.stringify(post)
+      })
+      getPosts();
+  };
+
  // when app run, already reload data
 useEffect(() => getPosts(), []);
 
@@ -41,7 +51,7 @@ return (
         <Route path="/posts">
             <Nav user={props.user} />
             <Route path="/posts/home" render={rp => (
-               <Home posts={posts} user={props.user} deletePost={deletePost} {...rp}/>
+               <Home posts={posts} user={props.user} deletePost={deletePost} createPost={createPost} {...rp}/>
             )} />
             <Route path="/posts/search">
               <Search />
