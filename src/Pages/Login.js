@@ -1,32 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {login} from '../services/firebase';
+import {login, logout} from '../services/firebase';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+
 
 export default function Login(props) {
-
-
 return (
-<div className="login">
-    <div style={{padding: "20%"}} className="card">
-    <h6 style={{fontWeight: "bold", marginBottom: "25%"}}>Log in to your account</h6>
-    <form>
-        <div className="email">
-            <input style={{fontSize: "12px"}} id="email" type="email" class="validate" placeholder="Email" />
-        </div>
-        <div className="password">
-            <input style={{fontSize: "12px"}} id="password" type="password" class="validate" placeholder="Password" />
-        </div>
-        <div style={{marginTop: "5%"}} className="submit">
-            <Link onClick={login} to="/posts" style={{width: "100%", marginTop: "5%", fontSize: "12px"}} className="waves-effect waves-light btn">Login
-            </Link>
-        </div>
-    </form>
-    <div style={{fontSize: "12px", marginTop: "10%"}} className="signup">
-        <p>Don't have an account?
-            <Link to="/signup">Signup</Link>
-        </p>
-    </div>
-    </div>
+
+<div className="loginPage">
+    <AppBar position="static" className="pink darken-2">
+        <Toolbar>
+            <Typography>
+                Welcome to Social Web
+            </Typography>
+        </Toolbar>
+    </AppBar>
+       {
+           props.user ?
+           
+       <button onClick={logout} style={{marginTop: "5%", width: 200, height: 200, borderRadius: "50%", marginRight: "2%", fontSize:35, cursor: "pointer"}} className="waves-effect waves-light btn pink darken-2"><Link style={{color: "white"}} to="/posts">Logout</Link></button>
+     
+       :
+       <button onClick={login} style={{marginTop: "5%", width: 200, height: 200, borderRadius: "50%", marginRight: "2%", fontSize:35, cursor: "pointer"}} className="waves-effect waves-light btn"><Link style={{color: "white"}} to="/posts">Login</Link></button>
+       }
 </div>
+
 )
 }
