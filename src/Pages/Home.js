@@ -42,9 +42,10 @@ return posts.map((post) => (
   <li className="collection-item avatar">
     {/* ********************** AVATAR CONTENT */}
      <img src={user.photoURL} className="circle" />
-
+     {/* ----------------------- ADD USER NAME */}
+       <span style={{marginRight: "80%", fontSize: 10, fontWeight: "bolder", color: "rgb(9, 107, 177)"}} className="title">{user.displayName}</span>
     {/* ************************* DELETE */}
-    <button style={{backgroundColor: "white", borderStyle: "none", color: "rgb(228, 32, 88)", marginLeft: "95%"}}
+    <button style={{backgroundColor: "white", borderStyle: "none", color: "rgb(236, 144, 144)", marginLeft: "95%"}}
       onClick={()=> handleDelete(post._id)} >
       <DeleteIcon /></button>
     {/* *********************************** */}
