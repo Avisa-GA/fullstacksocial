@@ -27,7 +27,7 @@ return (
             setDetails({...details, password: e.target.value})} value={details.password}/>
         </div>
         <div style={{marginTop: "5%"}} className="submit">
-        <Link onClick={logout} to="/posts" style={{width: "100%", marginTop: "5%", fontSize: "12px"}} className="waves-effect waves-light btn">Signup
+        <Link to="/posts" style={{width: "100%", marginTop: "5%", fontSize: "12px"}} className="waves-effect waves-light btn">Signup
         </Link>
         </div>
     </form>

@@ -10,7 +10,7 @@ import firebase from "firebase/app";
 import 'firebase/auth';
 
 
-const firebaseConfig = {
+const config = {
     apiKey: "AIzaSyD8tmi8jDb7D64nY3hfHEMmlQg4q2_RROs",
     authDomain: "react-people-f7b1d.firebaseapp.com",
     projectId: "react-people-f7b1d",
@@ -21,26 +21,20 @@ const firebaseConfig = {
   };
 
 
-  firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(config);
 
-//   TODO: Initialize the firebase app
-// TODO: Setup our provider for google signin
-const auth = firebase.auth();
-const provider = new firebase.auth.GoogleAuthProvider();
-
-// TODO: define login and logout actions
-
-function login() {
-    return auth.signInWithPopup(provider);
-}
-
-function logout() {
+  const auth = firebase.auth();
+  
+  function signUp(email, password) {
+    return auth.createUserWithEmailAndPassword(email, password);
+  }
+  
+  function login(email, password) {
+    return auth.signInWithEmailAndPassword(email, password);
+  }
+  
+  function signOut() {
     return auth.signOut();
-}
-// TODO: export fuctionality
-
-export {
-    login,
-    logout,
-    auth
-}
+  }
+  
+  export { signUp, signOut, login, auth };

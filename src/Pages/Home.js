@@ -75,14 +75,14 @@ return ( <div style={{marginRight: "5%"}} className="preloader-wrapper active">
 
 // Load function
 const loaded = () => {
-return posts.map((post) => (
-<ul className="collection">
+return posts.map((post, index) => (
+<ul key={index} className="collection">
   <li className="collection-item avatar">
     {/* ********************** AVATAR CONTENT */}
-    <img src={user.photoURL} className="circle" />
+    <img src={user?.photoURL} className="circle" />
     {/* ----------------------- ADD USER NAME */}
     <span style={{marginRight: "80%", fontSize: 10, fontWeight: "bolder", color: "rgb(9, 107, 177)"}}
-      className="title">{user.displayName}</span>
+      className="title">{user?.displayName}</span>
     {/* ************************* DELETE */}
     <button style={{backgroundColor: "white", borderStyle: "none", color: "rgb(236, 144, 144)", marginLeft: "95%"}}
       onClick={()=> handleDelete(post._id)} >
