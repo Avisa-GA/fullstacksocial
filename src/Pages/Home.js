@@ -5,6 +5,7 @@ import CommentIcon from '@material-ui/icons/Comment';
 import EditIcon from '@material-ui/icons/Edit';
 import {Image} from "cloudinary-react";
 import DeleteIcon from '@material-ui/icons/Delete';
+import { Input } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import Axios from 'axios';
 
@@ -30,11 +31,8 @@ setNewPost({ ...newPost, [event.target.name]: event.target.value});
 const uploadImage = () => {
    const formData = new FormData();
    formData.append("file", imageSelected);
-   console.log("i am here: ", imageSelected);
    formData.append("upload_preset", "ljxjnqss");
-   Axios.post("https://api.cloudinary.com/v1_1/dzsyqjq3i/image/upload", formData).then((response) => {
-        console.log(response)
-   });
+   Axios.post("https://api.cloudinary.com/v1_1/dzsyqjq3i/image/upload", formData);
 };
 
 
@@ -113,16 +111,13 @@ return (
         <div className="btn pink darken-2">
           <span style={{fontSize: 24}}>
             <ImageIcon /></span>
-            <>
           <input type="file" name="imageUrl" alt="" value={newPost.imageUrl} onChange={(e) => setImageSelected(e.target.files[0])} />
-          <button style={{marginRight: "2%"}} onClick={uploadImage} className="btn">upload image</button>
-          </>
         </div>
         <div className="file-path-wrapper">
           <input type="text" className="file-path validate" />
         </div>
       </div>
-      <button type="submit" style={{marginLeft: "88%"}} className="btn white-text pink darken-2">post</button>
+      <button onClick={uploadImage} type="submit" style={{marginLeft: "88%"}} className="btn white-text pink darken-2">post</button>
     </form>
   </div>
   <br />
