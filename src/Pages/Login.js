@@ -60,7 +60,7 @@ export default function Login(props) {
         }
 
         const {data} = await axios({
-            url: URL + "signup",
+            url: URL + "/signup",
             method: "POST",
             data: {
                 firstname,
@@ -140,10 +140,10 @@ return (
         </>
         )}
         <div className="email">
-            <input id="email" type="email" class="validate" placeholder="Email" style={{fontSize: 12}}/>
+            <input id="email" type="email" class="validate" placeholder="Email" value={email} style={{fontSize: 12}}/>
         </div>
         <div className="password">
-            <input id="password" type="password" class="validate" placeholder="Password" style={{fontSize: 12}}/>
+            <input id="password" type="password" class="validate" placeholder="Password" value={password} style={{fontSize: 12}}/>
         </div>
         <div className="submit">
          <Link to="/posts"><input style={{width: "100%", fontSize: "12px", marginTop: "5%"}} className="waves-effect waves-light btn" type="submit" value={loginEnabled ? "Login" : "Signup"} /></Link>
