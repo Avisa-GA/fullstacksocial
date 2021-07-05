@@ -130,7 +130,7 @@ return (
     <>
         <div className="login">
             <div style={{padding: "20%"}} className="card">
-                <h6 style={{fontWeight: "bold", color: "rgb(38, 156, 143)", marginTop: "-2%"}}>{ loginEnabled ? "Loginto your account" : "Create New Account"}</h6>
+                <h6 style={{fontWeight: "bold", color: "rgb(38, 156, 143)", marginBottom: "10%" , fontSize: 16}}>{ loginEnabled ? "Log into your account" : "Create New Account"}</h6>
                 <form onSubmit={loginEnabled ? handleLogin : handleSignup}>
                     {!loginEnabled && (<>
                         <div className="firstname">
@@ -142,7 +142,7 @@ return (
                                 value={lastname} onChange={handleChange} />
                         </div>
                         <div className="profileImage">
-                            <input style={{fontSize: "12px"}} type="file" name="image" onChange={handleImageFile} />
+                            <input style={{fontSize: "12px", display: "flex"}} type="file" name="image" onChange={handleImageFile} />
                         </div>
                     </>
                     )}
