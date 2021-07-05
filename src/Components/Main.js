@@ -50,10 +50,10 @@ return (
 <div className="main">
   <Switch>
     <Route exact path="/">
-      <Login user={props.user} />
+      <Login/>
     </Route>
     <Route path="/posts">
-      <Nav user={props.user} />
+      <Nav/>
       <Route path="/posts/home" render={rp=> (
         <Home posts={posts} user={props.user} deletePost={deletePost} createPost={createPost} {...rp} />
         )} />
