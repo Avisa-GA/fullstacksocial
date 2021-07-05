@@ -10,7 +10,7 @@ import Axios from 'axios';
 
 
 
-export default function Home({posts, deletePost, history, user, createPost}) {
+export default function Home({posts, deletePost, history, createPost}) {
 
 // ******************* Create Post
 const [newPost, setNewPost] = useState({
@@ -78,10 +78,10 @@ return posts.map((post, index) => (
 <ul key={index} className="collection">
   <li className="collection-item avatar">
     {/* ********************** AVATAR CONTENT */}
-    <img src={user?.photoURL} className="circle" />
+    <img src="" className="circle" />
     {/* ----------------------- ADD USER NAME */}
     <span style={{marginRight: "80%", fontSize: 10, fontWeight: "bolder", color: "rgb(9, 107, 177)"}}
-      className="title">{user?.displayName}</span>
+      className="title"></span>
     {/* ************************* DELETE */}
     <button style={{backgroundColor: "white", borderStyle: "none", color: "rgb(236, 144, 144)", marginLeft: "95%"}}
       onClick={()=> handleDelete(post._id)} >

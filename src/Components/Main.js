@@ -65,7 +65,7 @@ const [formMode, setFormMode] = useState({
   url: `${URL}api/users/signup`,
   method: "POST",
   headers: {
-    authorization: "bearer " + token
+    "authorization": "bearer " + token
   },
   data: {
   firstname,
@@ -124,21 +124,19 @@ const [formMode, setFormMode] = useState({
   }
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-    if (user) {
-    const {data} = await getLoggedInUser(user);
+    const unsubscribe = auth.onAuthStateChanged(async (userState) => {
+    if (userState) {
+    const {data} = await getLoggedInUser(userState);
     if (!data) await signOut();
-    setUserState({ ...user, ...data });
+    setUserState({ ...userState, ...data });
     } else {
-    setUserState(user);
+    setUserState(userState);
     }
     });
     return unsubscribe;
     });
   
-  const {loginEnabled} = formMode;
-  const {email, password, firstname, lastname} = formState;
-
+    const { loginEnabled } = formMode;
 
 // ********************* POSTS
 
@@ -148,18 +146,22 @@ const [posts, setPosts] = useState(null);
 
 // *************** SHOW ALL
 const getPosts = async (uid) => {
-  const url = uid ? URL + '?uid=' + uid : URL
-const response = await fetch(`${URL}post/`);
+const url = uid ? URL + '?uid=' + uid : URL
+const response = await fetch(`${URL}post`);
 const data = await response.json();
 setPosts(data);
 };
 
 // **************** DELETE POST
 const deletePost= async id => {
+  const token = await userState.getIdToken();
 await fetch(`${URL}post/${id}`, {
 method: "DELETE",
+headers: {
+  "authorization": "bearer " + token
+}
 })
-getPosts();
+getPosts(userState.uid);
 };
 
 // ***************** CREATE POST
@@ -179,7 +181,14 @@ const createPost = async (post) => {
 };
 
 // when app run, already reload data
-useEffect(() => getPosts(), []);
+useEffect(() => {
+  if(userState) {
+    getPosts(userState.uid);
+  } else {
+    getPosts();
+  }
+ 
+}, [userState]);
 
 return (
 <div className="main">
@@ -188,17 +197,14 @@ return (
       <Login 
       setFormMode={setFormMode}
       userState={userState}
-      handleSignout={handleSignout} 
-      loginEnabled={loginEnabled} 
-      handleLogin={handleLogin} 
+      handleSignout={handleSignout}
       handleSignup={handleSignup}
-      lastname={lastname}
       handleChange={handleChange}
-      firstname={firstname}
-      email={email}
-      password={password}
-      formState={formState}
+      handleLogin={handleLogin}
       handleImageFile={handleImageFile}
+      setFormMode={setFormMode}
+      loginEnabled={loginEnabled}
+      formState={formState}
       />
     </Route>
     <Route path="/posts">
@@ -209,15 +215,6 @@ return (
         user={props.user} 
         deletePost={deletePost} 
         createPost={createPost} 
-        userState={userState} 
-        formMode={formMode} 
-        handleSignout={handleSignout}
-        handleSignup={handleSignup}
-        handleChange={handleChange}
-        handleLogin={handleLogin}
-        handleImageFile={handleImageFile}
-        setFormMode={setFormMode}
-        loginEnabled={loginEnabled}
         {...rp} />
         )} />
         <Route path="/posts/search">
