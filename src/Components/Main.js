@@ -134,7 +134,7 @@ const [formMode, setFormMode] = useState({
     }
     });
     return unsubscribe;
-    });
+    }, []);
   
     const { loginEnabled } = formMode;
 
