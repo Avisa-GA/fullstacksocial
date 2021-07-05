@@ -1,132 +1,13 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import {login, signUp, auth, signOut} from '../services/firebase';
-import axios from "axios";
 
 
 
-const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dzsyqjq3i/image/upload"
+
+export default function Login({loginEnabled, formState, userState, handleSignout, handleSignup, handleChange, handleLogin, handleImageFile, setFormMode}) {
 
 
-export default function Login() {
-
-const URL = "https://social-full-backend.herokuapp.com/api/users"
-// for signup or login
-const [formMode, setFormMode] = useState({
-loginEnabled: true
-});
-
-// creating a new form
-const [formState, setFormState] = useState(newForm());
-
-// user state
-const [userState, setUserState] = useState(null);
-
-
-function getLoggedInUser(uid) {
-return axios({
-method: "GET",
-url: URL + "/" + uid
-});
-}
-
-async function handleSignup(e) {
-e.preventDefault();
 const {email, password, firstname, lastname} = formState;
-try {
-const {user} = await signUp(email, password);
-let image;
-
-if (formState.image) {
-// upload image to cloudinary
-const data = new FormData();
-data.append("file", formState.image);
-data.append("upload_preset", "ml_default");
-// fetch image from cloudinary
-const res = await fetch(CLOUDINARY_URL, {
-method: "POST",
-body: data
-});
-image = await res.json();
-}
-
-const {data} = await axios({
-url: URL + "/signup",
-method: "POST",
-data: {
-firstname,
-lastname,
-email,
-password,
-firebaseUid: user.uid,
-avatarUrl: image ? image.secure_url : ""
-}
-});
-
-setFormState(newForm());
-setUserState(data);
-
-} catch ({message}) {
-setFormState({ ...newForm(), errors: message });
-}
-}
-
-async function handleLogin(e) {
-e.preventDefault();
-try {
-const {email, password} = formState;
-await login(email, password);
-setFormState(newForm());
-} catch ({message}) {
-setFormState({ ...newForm(), errors: message });
-}
-}
-
-function handleChange(e) {
-setFormState((prevState) => ({
-...prevState,
-[e.target.name]: e.target.value,
-errors: ""
-}));
-}
-
-function handleImageFile(e) {
-const file = e.target.files[0];
-setFormState((prevState) => ({ ...prevState, image: file }));
-}
-
-function handleSignout() {
-signOut()
-}
-
-function newForm() {
-return {
-email: "",
-password: "",
-firstname: "",
-lastname: "",
-image: null,
-errors: ""
-};
-}
-
-useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-    if (user) {
-    const {data} = await getLoggedInUser(user.uid);
-    console.log('user Id:', user.uid)
-    setUserState(data);
-    console.log("data is here: ", data)
-    } else {
-    setUserState(user);
-    console.log("user is here", user)
-    }
-    });
-    return unsubscribe;
-    });
-
-const {loginEnabled} = formMode;
-const {email, password, firstname, lastname, image} = formState;
 
 console.log("firstname : ", firstname)
 
