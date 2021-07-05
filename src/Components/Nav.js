@@ -10,8 +10,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
+import {signOut} from '../services/firebase';
 
-import { signOut } from "../services/firebase";
+
 const useStyles = makeStyles(theme => ({
 menuButton: {
 marginRight: theme.spacing(2),

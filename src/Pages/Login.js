@@ -150,11 +150,11 @@ return (
                             style={{fontSize: 12}} onChange={handleChange} />
                     </div>
                     <div className="submit">
-                       
+                       <Link to="/posts">
                         <input style={{width: "100%", fontSize: "12px", marginTop: "5%"}}
-                            className="waves-effect waves-light btn" type="submit" value={ <Link to="/posts"> loginEnabled ? "Login"
-                            : "Signup" </Link>} />
-                        
+                            className="waves-effect waves-light btn" type="submit" value={loginEnabled ? "Login"
+                            : "Signup"} />
+                        </Link>
                     </div>
                     <div className="signup">
                         <button onClick={()=> setFormMode({loginEnabled: !loginEnabled})}
