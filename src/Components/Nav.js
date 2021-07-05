@@ -13,57 +13,50 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 
 import { signOut } from "../services/firebase";
 const useStyles = makeStyles(theme => ({
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
+menuButton: {
+marginRight: theme.spacing(2),
+},
+title: {
+flexGrow: 1,
+},
 }));
 
 export default function Nav(props) {
-  const classes = useStyles();
+const classes = useStyles();
 
-  function handleSignout() {
-    signOut();
+function handleSignout() {
+signOut();
 }
- 
-  return (
-    <AppBar position="static" className="pink darken-2">
-      <Toolbar>
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          className={classes.menuButton}
-        >
-          <MenuBookIcon style={{fontSize: "50px", color: "rgb(251, 224, 233)"}}/>
-        </IconButton>
-        <Typography className={classes.title}>
-        <Link to="/posts/home">
-         <HomeIcon style={{color: "white"}} />
-         </Link>
-        </Typography >
-        <Typography className={classes.title}>
-        <Link to="/posts/search">
-          <SearchIcon style={{color: "white"}}/>
-           </Link>
-</Typography>
-<Typography className={classes.title}>
-<Link to="/posts/profile">
-          <PersonIcon style={{color: "white"}}/>
-           </Link>
-</Typography>
-<Typography className={classes.title}>
-<Link to="/" >
-         <button onClick={handleSignout} style={{borderStyle: "none", backgroundColor: "rgb(185, 26, 80)"}}><ExitToAppIcon style={{color: "white"}}/></button>
-           </Link>
-</Typography>
-      </Toolbar>
-      
-    </AppBar>
-  );
+
+return (
+<AppBar position="static" className="pink darken-2">
+  <Toolbar>
+    <IconButton edge="start" color="inherit" aria-label="menu" className={classes.menuButton}>
+      <MenuBookIcon style={{fontSize: "50px", color: "rgb(251, 224, 233)"}} />
+    </IconButton>
+    <Typography className={classes.title}>
+      <Link to="/posts/home">
+      <HomeIcon style={{color: "white"}} />
+      </Link>
+    </Typography>
+    <Typography className={classes.title}>
+      <Link to="/posts/search">
+      <SearchIcon style={{color: "white"}} />
+      </Link>
+    </Typography>
+    <Typography className={classes.title}>
+      <Link to="/posts/profile">
+      <PersonIcon style={{color: "white"}} />
+      </Link>
+    </Typography>
+    <Typography className={classes.title}>
+      <Link to="/">
+      <button onClick={handleSignout} style={{borderStyle: "none", backgroundColor: "rgb(185, 26, 80)"}}>
+        <ExitToAppIcon style={{color: "white"}} /></button>
+      </Link>
+    </Typography>
+  </Toolbar>
+
+</AppBar>
+);
 };
-
-
-
