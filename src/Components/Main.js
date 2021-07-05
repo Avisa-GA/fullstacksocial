@@ -12,7 +12,7 @@ import axios from "axios";
 const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dzsyqjq3i/image/upload"
 const URL = "https://social-full-backend.herokuapp.com/"
 
-export default function Main(props) {
+export default function Main() {
 
 
 
@@ -147,7 +147,7 @@ const [posts, setPosts] = useState(null);
 // *************** SHOW ALL
 const getPosts = async (uid) => {
 const url = uid ? URL + '?uid=' + uid : URL
-const response = await fetch(`${URL}post`);
+const response = await fetch(`${url}post`);
 const data = await response.json();
 setPosts(data);
 };
@@ -202,7 +202,6 @@ return (
       handleChange={handleChange}
       handleLogin={handleLogin}
       handleImageFile={handleImageFile}
-      setFormMode={setFormMode}
       loginEnabled={loginEnabled}
       formState={formState}
       />
@@ -212,7 +211,7 @@ return (
       <Route path="/posts/home" render={rp=> (
         <Home 
         posts={posts} 
-        user={props.user} 
+        user={userState} 
         deletePost={deletePost} 
         createPost={createPost} 
         {...rp} />
