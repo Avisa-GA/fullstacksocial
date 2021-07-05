@@ -11,7 +11,7 @@ export default function Login() {
 
 // for signup or login
 const [formMode, setFormMode] = useState({
-loginEnabled: true
+loginEnabled: false
 });
 
 // creating a new form
@@ -166,7 +166,9 @@ return (
                             style={{marginRight: "40%", fontSize: "14px", borderStyle: "none", color:"rgb(9, 107, 177)", backgroundColor: "white"}}
                             className="waves-effect">{loginEnabled ? "Go to Sign up page" : "Go to login page"}
                         </button>
-
+                        {formState.errors && (
+                            <span style={{color: "red"}}>{formState.errors}</span>
+                        )}
                     </div>
 
                 </form>
