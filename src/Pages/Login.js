@@ -146,7 +146,7 @@ return (
             <input type="password" class="validate" name="password" placeholder="Password" value={password} style={{fontSize: 12}} onChange={handleChange}/>
         </div>
         <div className="submit">
-         <Link to="/posts"><input style={{width: "100%", fontSize: "12px", marginTop: "5%"}} className="waves-effect waves-light btn" type="submit" value={loginEnabled ? "Login" : "Signup"} /></Link>
+        <input style={{width: "100%", fontSize: "12px", marginTop: "5%"}} className="waves-effect waves-light btn" type="submit" value={loginEnabled ? "Login" : "Signup"} />
         </div>
         <div className="signup">
         <button onClick={() => setFormMode({loginEnabled: !loginEnabled})} style={{marginRight: "40%", fontSize: "14px", borderStyle: "none", color:"rgb(9, 107, 177)", backgroundColor: "white"}} className="waves-effect">{loginEnabled ? "Go to Sign up page" : "Go to login page"}
