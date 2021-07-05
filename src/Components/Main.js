@@ -29,8 +29,8 @@ const [formMode, setFormMode] = useState({
   // user state
   const [userState, setUserState] = useState(null);
   
-  async function getLoggedInUser(user) {
-    const token = await user.getIdToken();
+  async function getLoggedInUser(userState) {
+    const token = await userState.getIdToken();
   return axios({
   method: "GET",
   url: `${URL}api/users/login`,
