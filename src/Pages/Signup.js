@@ -11,7 +11,7 @@ return (
 
     <div className="signup">
     <div style={{padding: "20%"}} className="card">
-    <h6 style={{fontWeight: "bold", marginBottom: "25%"}}>Create New Account</h6>
+    <h6 style={{fontWeight: "bold",color: "rgb(38, 156, 143)", marginBottom: "5%"}}>Create New Account</h6>
     <form>
         <div className="firstname">
         <input style={{fontSize: "12px"}} type="text" name="firstname" placeholder="firstname" />
@@ -28,6 +28,7 @@ return (
         <div style={{marginTop: "5%"}} className="submit">
         <Link to="/posts" style={{width: "100%", fontSize: "12px"}} className="waves-effect waves-light btn">Signup
         </Link>
+        <p style={{fontSize: 12, marginRight: "10%"}}>Do you have account? <Link to="/">Login</Link></p>
         </div>
     </form>
    

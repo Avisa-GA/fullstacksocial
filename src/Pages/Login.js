@@ -11,7 +11,7 @@ export default function Login(props) {
 
     // for signup or login
     const [formMode, setFormMode] = useState({
-        loginEnabled: false
+        loginEnabled: true
     });
 
     // creating a new form
@@ -122,12 +122,31 @@ export default function Login(props) {
     const {email, password, firstname, lastname} = formState;
 
 return (
-  <>
-  {userSate && (
+ <>
+  {!userSate && (
+      <>
     <div className="login">
     <div style={{padding: "20%"}} className="card">
-    <h6 style={{fontWeight: "bold", color: "rgb(38, 156, 143)", marginTop: "-2%"}}>Log in to your account</h6>
-    <form>
+    <h6 style={{fontWeight: "bold", color: "rgb(38, 156, 143)", marginTop: "-2%"}}>{ loginEnabled ? "Log in to your account" : "Create New Account"}</h6>
+    <form onSubmit={loginEnabled ? handleLogin : handleSignup}>
+        {!loginEnabled && (<>
+        <div className="firstname">
+        <input style={{fontSize: "12px"}} type="text" name="firstname" placeholder="firstname" value={firstname} onChange={handleChange} />
+        </div>
+        <div className="lastname">
+        <input style={{fontSize: "12px"}} type="text" name="lastname" placeholder="lastname" value={lastname} onChange={handleChange} />
+        </div>
+        <div className="profileImage">
+        <input style={{fontSize: "12px"}} type="file" name="image" onChange={handleImageFile} />
+        </div>
+        <div className="email">
+        <input style={{fontSize: "12px"}} type="text" name="email" placeholder="Email" value={email} onChange={handleChange} />
+        </div>
+        <div className="password">
+        <input style={{fontSize: "12px"}} type="text" name="password" placeholder="Password" value={password} onChange={handleChange}/>
+        </div>
+        </>
+        )}
         <div className="email">
             <input id="email" type="email" class="validate" placeholder="Email" style={{fontSize: 12}}/>
         </div>
@@ -135,15 +154,19 @@ return (
             <input id="password" type="password" class="validate" placeholder="Password" style={{fontSize: 12}}/>
         </div>
         <div className="submit">
-            <input style={{width: "100%", marginTop: "5%"}}  type="button" value="Submit" className="waves-effect waves-light btn" />
+        <button onClick={() => setFormMode({loginEnabled: !loginEnabled})} style={{width: "100%", fontSize: "12px", marginTop: "5%"}} className="waves-effect waves-light btn"><Link style={{color: "white"}} to="/posts" >{loginEnabled ? "login" : "Signup"}
+        </Link></button>
         </div>
         <div className="signup">
-            <p style={{fontSize: 12}}>Don't have an account? <Link to="/signup">Signup</Link></p>
+        <button onClick={() => setFormMode({loginEnabled: !loginEnabled})} style={{marginRight: "40%", fontSize: "14px", borderStyle: "none", color:"rgb(9, 107, 177)", backgroundColor: "white"}} className="waves-effect">{loginEnabled ? "Go to login page" : "Go to signup page"}
+        </button>
+            {/* <p style={{fontSize: 12, marginRight: "40%"}}>{loginEnabled ?  <Link to="/signup">Go to signup page </Link> : <Link to="/">Go to login page</Link>}</p> */}
         </div>
 
     </form>
 </div>
 </div>
+</>
   )}
 </>
 )};

@@ -2,7 +2,7 @@ import 'materialize-css/dist/css/materialize.min.css';
 import React, {useState, useEffect} from "react";
 import Login from '../Pages/Login';
 import { Route, Switch } from "react-router-dom";
-import Signup from '../Pages/Signup';
+// import Signup from '../Pages/Signup';
 import Nav from './Nav';
 import Home from '../Pages/Home';
 import Search from '../Pages/Search';
@@ -64,9 +64,9 @@ return (
           <Profile />
         </Route>
       </Route>
-      <Route to="/signup">
+      {/* <Route to="/signup">
         <Signup user={props.user} />
-      </Route>
+      </Route> */}
   </Switch>
 </div>
 );
