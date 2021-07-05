@@ -109,7 +109,7 @@ const [formMode, setFormMode] = useState({
   }
   
   function handleSignout() {
-  signOut()
+  signOut();
   }
   
   function newForm() {
@@ -124,13 +124,13 @@ const [formMode, setFormMode] = useState({
   }
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (userState) => {
-    if (userState) {
-    const {data} = await getLoggedInUser(userState);
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    if (user) {
+    const {data} = await getLoggedInUser(user);
     if (!data) await signOut();
-    setUserState({ ...userState, ...data });
+    setUserState({ ...user, ...data });
     } else {
-    setUserState(userState);
+    setUserState(user);
     }
     });
     return unsubscribe;
