@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
-import {login, signUp, auth} from '../services/firebase';
+import {login, signUp, auth, signOut} from '../services/firebase';
 import axios from "axios";
 
 
@@ -103,6 +103,9 @@ const file = e.target.files[0];
 setFormState((prevState) => ({ ...prevState, image: file }));
 }
 
+function handleSignout() {
+signOut()
+}
 
 function newForm() {
 return {
@@ -120,12 +123,14 @@ const {email, password, firstname, lastname} = formState;
 
 return (
 <>
-
+    <h6 style={{color: "blue"}}>Welcome to social web App</h6>
+    {userState && ( <button onClick={handleSignout} className="waves-effect waves-light btn">Sign Out
+    </button>)}
     {!userState && (
     <>
         <div className="login">
             <div style={{padding: "20%"}} className="card">
-                <h6 style={{fontWeight: "bold", color: "rgb(38, 156, 143)", marginTop: "-2%"}}>{ loginEnabled ? "Log into your account" : "Create New Account"}</h6>
+                <h6 style={{fontWeight: "bold", color: "rgb(38, 156, 143)", marginTop: "-2%"}}>{ loginEnabled ? "Loginto your account" : "Create New Account"}</h6>
                 <form onSubmit={loginEnabled ? handleLogin : handleSignup}>
                     {!loginEnabled && (<>
                         <div className="firstname">
@@ -150,10 +155,10 @@ return (
                             style={{fontSize: 12}} onChange={handleChange} />
                     </div>
                     <div className="submit">
-                       <Link to="/posts">
+                        <Link to="/posts">
                         <input style={{width: "100%", fontSize: "12px", marginTop: "5%"}}
                             className="waves-effect waves-light btn" type="submit" value={loginEnabled ? "Login"
-                            : "Signup"} />
+                            : "Signup" } />
                         </Link>
                     </div>
                     <div className="signup">
