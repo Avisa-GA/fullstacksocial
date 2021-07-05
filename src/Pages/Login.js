@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
-import {login, signUp, signOut, auth} from '../services/firebase';
+import {login, signUp, auth} from '../services/firebase';
 import axios from "axios";
 
 
@@ -18,7 +18,7 @@ export default function Login(props) {
     const [formState, setFormState] = useState(newForm());
 
     // user state
-    const [userSate, setUserState] = useState(null);
+    const [userState, setUserState] = useState(null);
 
     useEffect(() => {
          const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -67,7 +67,7 @@ export default function Login(props) {
                 lastname,
                 email,
                 firebaseUid: user.uid,
-                profileImageUrl: image ? image.secure_url : ""
+                avatarUrl: image ? image.secure_url : ""
             }
         });
 
@@ -103,9 +103,6 @@ export default function Login(props) {
         setFormState((prevState) => ({ ...prevState, image: file }));
     }
 
-    function handleSignout() {
-           signOut();
-    }
 
     function newForm() {
         return {
@@ -123,7 +120,8 @@ export default function Login(props) {
 
 return (
  <>
-  {!userSate && (
+
+  {!userState && (
       <>
     <div className="login">
     <div style={{padding: "20%"}} className="card">
@@ -148,14 +146,12 @@ return (
             <input id="password" type="password" class="validate" placeholder="Password" style={{fontSize: 12}}/>
         </div>
         <div className="submit">
-         {/* <button onClick={() => setFormMode({loginEnabled: !loginEnabled})} style={{width: "100%", fontSize: "12px", marginTop: "5%"}} className="waves-effect waves-light btn"><Link style={{color: "white"}} to="/posts" >{loginEnabled ? "login" : "Signup"}  */}
-        {/* </Link></button> */}
          <Link to="/posts"><input style={{width: "100%", fontSize: "12px", marginTop: "5%"}} className="waves-effect waves-light btn" type="submit" value={loginEnabled ? "Login" : "Signup"} /></Link>
         </div>
         <div className="signup">
         <button onClick={() => setFormMode({loginEnabled: !loginEnabled})} style={{marginRight: "40%", fontSize: "14px", borderStyle: "none", color:"rgb(9, 107, 177)", backgroundColor: "white"}} className="waves-effect">{loginEnabled ? "Go to login page" : "Go to signup page"}
         </button>
-            {/* <p style={{fontSize: 12, marginRight: "40%"}}>{loginEnabled ?  <Link to="/signup">Go to signup page </Link> : <Link to="/">Go to login page</Link>}</p> */}
+            
         </div>
 
     </form>

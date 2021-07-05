@@ -3,7 +3,6 @@ import Divider from '@material-ui/core/Divider';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import CommentIcon from '@material-ui/icons/Comment';
 import EditIcon from '@material-ui/icons/Edit';
-import {Image} from "cloudinary-react";
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Input } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
