@@ -166,8 +166,10 @@ return (
                             style={{marginRight: "40%", fontSize: "14px", borderStyle: "none", color:"rgb(9, 107, 177)", backgroundColor: "white"}}
                             className="waves-effect">{loginEnabled ? "Go to Sign up page" : "Go to login page"}
                         </button>
+                        <br />
+                        <br />
                         {formState.errors && (
-                            <span style={{color: "red"}}>{formState.errors}</span>
+                            <p className="left-align" style={{color: "red", marginRight: "40%"}}>{formState.errors}</p>
                         )}
                     </div>
 
