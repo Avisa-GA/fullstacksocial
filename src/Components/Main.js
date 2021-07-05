@@ -8,14 +8,16 @@ import Search from '../Pages/Search';
 import Profile from '../Pages/Profile';
 import {login, signUp, auth, signOut} from '../services/firebase';
 import axios from "axios";
+import { useHistory } from 'react-router-dom';
 
-const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dzsyqjq3i/image/upload"
-const URL = "https://social-full-backend.herokuapp.com/"
+
 
 export default function Main() {
 
+  const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dzsyqjq3i/image/upload"
+  const URL = "https://social-full-backend.herokuapp.com/"
 
-
+  const history = useHistory();
 // ********************* LOGIN / SIGNUP
 
 // for signup or login
@@ -59,6 +61,8 @@ const [formMode, setFormMode] = useState({
   method: "POST",
   data
   });
+
+  history.push('/posts')
   }
   
    await axios({
@@ -93,6 +97,7 @@ const [formMode, setFormMode] = useState({
   } catch ({message}) {
   setFormState({ ...newForm(), errors: message });
   }
+  history.push('/posts')
   }
   
   function handleChange(e) {

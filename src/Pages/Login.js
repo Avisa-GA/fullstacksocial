@@ -45,19 +45,17 @@ return (
                     )}
                     {/* **************** Login */}
                     <div className="email">
-                        <input type="email" class="validate" name="email" placeholder="Email" value={email}
+                        <input type="email" className="validate" name="email" placeholder="Email" value={email}
                             style={{fontSize: 12}} onChange={handleChange} />
                     </div>
                     <div className="password">
-                        <input type="password" class="validate" name="password" placeholder="Password" value={password}
+                        <input type="password" className="validate" name="password" placeholder="Password" value={password}
                             style={{fontSize: 12}} onChange={handleChange} />
                     </div>
                     <div className="submit">
-                        <Link to="/posts">
-                        <input style={{width: "100%", fontSize: "12px", marginTop: "5%"}}
-                            className="waves-effect waves-light btn" type="submit" value={loginEnabled ? "Login"
-                            : "Signup" } />
-                        </Link>
+                    <input style={{width: "100%", fontSize: "12px", marginTop: "5%"}}
+   className="waves-effect waves-light btn" type="submit" value={loginEnabled ? "Login"
+: "Signup" } />
                     </div>
                     <div className="signup">
                         <button onClick={()=> setFormMode({loginEnabled: !loginEnabled})}
