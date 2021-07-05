@@ -7,7 +7,7 @@ import axios from "axios";
 const URL = "https://social-full-backend.herokuapp.com/api/users"
 const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dzsyqjq3i/image/upload"
 
-export default function Login(props) {
+export default function Login() {
 
 // for signup or login
 const [formMode, setFormMode] = useState({
