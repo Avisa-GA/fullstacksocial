@@ -139,12 +139,6 @@ return (
         <div className="profileImage">
         <input style={{fontSize: "12px"}} type="file" name="image" onChange={handleImageFile} />
         </div>
-        <div className="email">
-        <input style={{fontSize: "12px"}} type="text" name="email" placeholder="Email" value={email} onChange={handleChange} />
-        </div>
-        <div className="password">
-        <input style={{fontSize: "12px"}} type="text" name="password" placeholder="Password" value={password} onChange={handleChange}/>
-        </div>
         </>
         )}
         <div className="email">
