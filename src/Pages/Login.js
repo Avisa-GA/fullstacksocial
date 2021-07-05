@@ -148,8 +148,9 @@ return (
             <input id="password" type="password" class="validate" placeholder="Password" style={{fontSize: 12}}/>
         </div>
         <div className="submit">
-        <button onClick={() => setFormMode({loginEnabled: !loginEnabled})} style={{width: "100%", fontSize: "12px", marginTop: "5%"}} className="waves-effect waves-light btn"><Link style={{color: "white"}} to="/posts" >{loginEnabled ? "login" : "Signup"}
-        </Link></button>
+         {/* <button onClick={() => setFormMode({loginEnabled: !loginEnabled})} style={{width: "100%", fontSize: "12px", marginTop: "5%"}} className="waves-effect waves-light btn"><Link style={{color: "white"}} to="/posts" >{loginEnabled ? "login" : "Signup"}  */}
+        {/* </Link></button> */}
+         <Link to="/posts"><input style={{width: "100%", fontSize: "12px", marginTop: "5%"}} className="waves-effect waves-light btn" type="submit" value={loginEnabled ? "Login" : "Signup"} /></Link>
         </div>
         <div className="signup">
         <button onClick={() => setFormMode({loginEnabled: !loginEnabled})} style={{marginRight: "40%", fontSize: "14px", borderStyle: "none", color:"rgb(9, 107, 177)", backgroundColor: "white"}} className="waves-effect">{loginEnabled ? "Go to login page" : "Go to signup page"}
@@ -158,7 +159,7 @@ return (
         </div>
 
     </form>
-</div>
+</div>  
 </div>
 </>
   )}
