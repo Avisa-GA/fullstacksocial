@@ -4,14 +4,16 @@ import {login, signUp, auth, signOut} from '../services/firebase';
 import axios from "axios";
 
 
-const URL = "https://social-full-backend.herokuapp.com/api/users"
+
 const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dzsyqjq3i/image/upload"
+
 
 export default function Login() {
 
+const URL = "https://social-full-backend.herokuapp.com/api/users"
 // for signup or login
 const [formMode, setFormMode] = useState({
-loginEnabled: false
+loginEnabled: true
 });
 
 // creating a new form
@@ -20,17 +22,6 @@ const [formState, setFormState] = useState(newForm());
 // user state
 const [userState, setUserState] = useState(null);
 
-useEffect(() => {
-const unsubscribe = auth.onAuthStateChanged(async (user) => {
-if (user) {
-const {data} = await getLoggedInUser(user.uid);
-setUserState(data);
-} else {
-setUserState(user);
-}
-});
-return unsubscribe;
-});
 
 function getLoggedInUser(uid) {
 return axios({
@@ -66,6 +57,7 @@ data: {
 firstname,
 lastname,
 email,
+password,
 firebaseUid: user.uid,
 avatarUrl: image ? image.secure_url : ""
 }
@@ -118,20 +110,44 @@ errors: ""
 };
 }
 
+useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    if (user) {
+    const {data} = await getLoggedInUser(user.uid);
+    console.log('user Id:', user.uid)
+    setUserState(data);
+    console.log("data is here: ", data)
+    } else {
+    setUserState(user);
+    console.log("user is here", user)
+    }
+    });
+    return unsubscribe;
+    });
+
 const {loginEnabled} = formMode;
-const {email, password, firstname, lastname} = formState;
+const {email, password, firstname, lastname, image} = formState;
+
+console.log("firstname : ", firstname)
 
 return (
 <>
     <h6 style={{color: "blue"}}>Welcome to social web App</h6>
-    {userState && ( <button onClick={handleSignout} className="waves-effect waves-light btn">Sign Out
-    </button>)}
+    
+    {userState && (
+        <> 
+        <h5>Hello, {userState.firstname} {userState.lastname}</h5>
+    <button onClick={handleSignout} className="waves-effect waves-light btn">Sign Out
+    </button>
+    </>
+    )}
     {!userState && (
     <>
         <div className="login">
             <div style={{padding: "20%"}} className="card">
                 <h6 style={{fontWeight: "bold", color: "rgb(38, 156, 143)", marginBottom: "10%" , fontSize: 16}}>{ loginEnabled ? "Log into your account" : "Create New Account"}</h6>
                 <form onSubmit={loginEnabled ? handleLogin : handleSignup}>
+                    {/* *************** Signup */}
                     {!loginEnabled && (<>
                         <div className="firstname">
                             <input style={{fontSize: "12px"}} type="text" name="firstname" placeholder="firstname"
@@ -146,6 +162,7 @@ return (
                         </div>
                     </>
                     )}
+                    {/* **************** Login */}
                     <div className="email">
                         <input type="email" class="validate" name="email" placeholder="Email" value={email}
                             style={{fontSize: 12}} onChange={handleChange} />
