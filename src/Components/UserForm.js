@@ -32,7 +32,7 @@ export default function UserForm({isLogin}) {
               const {email, password} = state;
               await login(email, password);
               setState(newForm());
-              history.push("/");
+              history.push("/login");
           } catch ({message}) {
               setState({ ...newForm(), errors: message })
           }

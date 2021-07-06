@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import {signOut} from '../services/firebase';
+import { useHistory } from "react-router-dom";
 
 
 const useStyles = makeStyles(theme => ({
@@ -22,7 +23,15 @@ flexGrow: 1,
 }));
 
 export default function Nav({userState}) {
+
 const classes = useStyles();
+const history = useHistory();
+
+
+async function handleSignout() {
+  await signOut();
+  history.push("/login")
+}
 
 
 return (
@@ -51,8 +60,8 @@ return (
                    {userState ? (
                        <>
                        <li>Welcome, {userState.firstName}</li>
-                       <li>
-                           <Link style={{color: "white"}} to="/" onClick={signOut}>Logout</Link>
+                       <li style={{color: "white"}} onClick={handleSignout}>
+                       <Link style={{color: "white"}} to="/login" onClick={signOut}>Logout</Link>
                        </li>
                        <br />
                        <br />

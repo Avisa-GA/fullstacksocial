@@ -30,13 +30,12 @@ useEffect(() => {
   return unsubscribe;
 }, [userState]);
 
-console.log("i am here from Main: ", userState)
 
 return (
 <div className="main">
   <Nav userState={userState} />
   <Switch>
-    <Route exact path="/" >
+    <Route path="/" >
       <Home userState={userState}/>
       </Route>
       <Route path="/search">
@@ -45,7 +44,7 @@ return (
       <Route path="/profile">
         <Profile />
       </Route>
-      <Route path="/login">
+      <Route exact path="/login">
         <Login />
       </Route>
       <Route path="/signup">
