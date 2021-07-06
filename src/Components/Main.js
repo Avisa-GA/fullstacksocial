@@ -35,7 +35,7 @@ return (
 <div className="main">
   <Nav userState={userState} />
   <Switch>
-    <Route path="/" >
+    <Route exact path="/" >
       <Home userState={userState}/>
       </Route>
       <Route path="/search">
@@ -44,7 +44,7 @@ return (
       <Route path="/profile">
         <Profile />
       </Route>
-      <Route exact path="/login">
+      <Route path="/login">
         <Login />
       </Route>
       <Route path="/signup">

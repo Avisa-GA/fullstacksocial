@@ -10,7 +10,7 @@ import { getPosts, createPost, uploadPostImage, deletePost  } from '../services/
 import { auth } from '../services/firebase';
 
 
-export default function Home({userState}) {
+export default function Home({userState, match}) {
 
 // ******************* Create Post
 

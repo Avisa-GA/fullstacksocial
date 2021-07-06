@@ -60,8 +60,8 @@ return (
                    {userState ? (
                        <>
                        <li>Welcome, {userState.firstName}</li>
-                       <li style={{color: "white"}} onClick={handleSignout}>
-                       <Link style={{color: "white"}} to="/login" onClick={signOut}>Logout</Link>
+                       <li style={{color: "white", cursor: "pointer"}} onClick={handleSignout}>
+                           Logout
                        </li>
                        <br />
                        <br />
