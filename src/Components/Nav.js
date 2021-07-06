@@ -46,16 +46,18 @@ return (
       <PersonIcon style={{color: "white"}} />
       </Link>
     </Typography>
-    <Typography style={{marginRight: "5%"}} className={classes.title}>
+    <Typography style={{marginRight: "1%"}} className={classes.title}>
                 <ul className="right-align" style={{display: "flex", listStyle: "none", alignItems: "center"}}>
                    {userState ? (
                        <>
-                       <li>Welcome, {userState.firstname}</li>
+                       <li>Welcome, {userState.firstName}</li>
                        <li>
                            <Link style={{color: "white"}} to="/" onClick={signOut}>Logout</Link>
                        </li>
+                       <br />
+                       <br />
                        <li>
-                           <img src={userState.avatarUrl} alt="" />
+                           <img style={{width: 38, height: 38, borderRadius: "50%"}} src={userState.avatarUrl} alt="" />
                        </li>
                        </>
                    ) : (
