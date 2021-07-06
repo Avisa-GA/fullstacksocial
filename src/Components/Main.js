@@ -9,6 +9,7 @@ import Profile from '../Pages/Profile';
 import {login, signUp, auth, signOut} from '../services/firebase';
 import axios from "axios";
 import { useHistory } from 'react-router-dom';
+import LoginNav from './LoginNav';
 
 
 
@@ -62,7 +63,7 @@ const [formMode, setFormMode] = useState({
   data
   });
 
-  history.push('/posts')
+  history.push('/posts/home')
   }
   
    await axios({
@@ -97,7 +98,7 @@ const [formMode, setFormMode] = useState({
   } catch ({message}) {
   setFormState({ ...newForm(), errors: message });
   }
-  history.push('/posts')
+  history.push('/posts/home')
   }
   
   function handleChange(e) {
@@ -115,6 +116,7 @@ const [formMode, setFormMode] = useState({
   
   function handleSignout() {
   signOut();
+  history.push('/')
   }
   
   function newForm() {
@@ -199,17 +201,7 @@ return (
 <div className="main">
   <Switch>
     <Route exact path="/">
-      <Login 
-      setFormMode={setFormMode}
-      userState={userState}
-      handleSignout={handleSignout}
-      handleSignup={handleSignup}
-      handleChange={handleChange}
-      handleLogin={handleLogin}
-      handleImageFile={handleImageFile}
-      loginEnabled={loginEnabled}
-      formState={formState}
-      />
+      <LoginNav/>
     </Route>
     <Route path="/posts">
       <Nav/>
