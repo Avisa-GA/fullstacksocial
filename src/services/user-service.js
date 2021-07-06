@@ -1,6 +1,6 @@
 import axios from 'axios';
 const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dzsyqjq3i/image/upload"
-const URL = "https://social-full-backend.herokuapp.com/"
+const URL = "https://social-full-backend.herokuapp.com/api/users"
 
 async function getLoggedInUser(user) {
     const token = await user.getIdToken();

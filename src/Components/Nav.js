@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import SearchIcon from '@material-ui/icons/Search';
 import HomeIcon from '@material-ui/icons/Home';
 import PersonIcon from '@material-ui/icons/Person';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -62,10 +61,12 @@ return (
                    ) : (
                        <>
                        <li style={{marginLeft: "80%"}}>
-                           <Link style={{color: "white"}} to="/login">Login</Link>
+                           <Link style={{color: "white", fontWeight: "bold"}} to="/login">Login </Link>
                        </li>
+                       <br />
+                       <br />
                        <li style={{marginRight: "80%"}}>
-                           <Link style={{color: "white"}} to="/signup">Signup</Link>
+                           <Link style={{color: "white", fontWeight: "bold"}} to="/signup"> Signup</Link>
                        </li>
                        </>
                    )}

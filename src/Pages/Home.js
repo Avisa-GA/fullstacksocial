@@ -6,52 +6,90 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Input } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
-import Axios from 'axios';
+import { useHistory } from "react-router-dom";
+import { getPosts, createPost, uploadPostImage, deletePost  } from '../services/post-service';
 
 
 
-export default function Home({posts, deletePost, history, createPost}) {
+export default function Home({userState}) {
 
 // ******************* Create Post
-const [newPost, setNewPost] = useState({
-text: "",
-imageUrl: ""
-});
 
-const [imageSelected, setImageSelected] = useState("");
+const [newPost, setNewPost] = useState(newForm());
+const [posts, setPosts] = userState(null);
 
-// HandleChange function for form
-const handleChange = (event) => {
- 
-setNewPost({ ...newPost, [event.target.name]: event.target.value});
-};
+const history = useHistory();
 
-// ***************** Upload Image
-const uploadImage = () => {
-   const formData = new FormData();
-   formData.append("file", imageSelected);
-   formData.append("upload_preset", "ljxjnqss");
-   Axios.post("https://api.cloudinary.com/v1_1/dzsyqjq3i/image/upload", formData);
-};
-
-
-
-
-// Handle submit function for form
-const handleSubmit = (event) => {
-event.preventDefault();
-createPost(newPost);
-setNewPost({
-text: "",
-imageUrl: ""
-})
-};
-
-// ************* Delete Action
-const handleDelete = id => {
-deletePost(id);
-history.push('/posts/home');
+function newForm() {
+  return {
+    text: "",
+    imageUrl: null
+  }
 }
+
+// ******************** Get all posts
+async function getAllPosts(uid) {
+  setPosts(await getPosts(uid));
+}
+// ******************** Change postState
+const handleChange = (e) => {
+  setNewPost((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+      errors: ""
+  }))
+};
+
+// ****************** Delete Post
+async function handleDelete(id) {
+  const token = await userState.getIdToken();
+  await deletePost(id, token);
+  getAllPosts(userState.uid);
+  history.push("/");
+}
+
+// ******************* Submit Post (Create a new post)
+async function handleSubmit(e) {
+     e.preventDefault();
+     const {text, imageUrl} = newPost;
+     const token = await userState.getIdToken();
+     try {
+
+      if(!userState) {
+        alert("must be logged in")
+        return;
+      }
+
+      let imageData;
+      if (newPost.imageUrl) {
+        const data = new FormData();
+        data.append("file", newPost.image);
+        data.append("upload_preset", "ml_default");
+        imageData = await uploadPostImage(data);
+      }
+
+      await createPost({
+         text,
+         imageUrl: imageData ? imageData.data.secure_url : ""
+      },
+      token
+      )
+
+      setNewPost(newForm());
+      getAllPosts(userState.uid);
+      history.push("/");
+
+     } catch ({message}) {
+       setNewPost({ ...newForm(), errors: message })
+     }
+};
+
+// ************************ Image upload
+function handleImageFile(e) {
+  const file = e.target.files[0];
+  setNewPost((prevState) => ({ ...prevState, imageUrl: file}));
+}
+
 
 
 // ************************************************ Show
@@ -78,10 +116,10 @@ return posts.map((post, index) => (
 <ul key={index} className="collection">
   <li className="collection-item avatar">
     {/* ********************** AVATAR CONTENT */}
-    <img src="" className="circle" />
+    <img src={userState.avatarUrl} alert="" className="circle" />
     {/* ----------------------- ADD USER NAME */}
     <span style={{marginRight: "80%", fontSize: 10, fontWeight: "bolder", color: "rgb(9, 107, 177)"}}
-      className="title"></span>
+      className="title">{userState.firstName}</span>
     {/* ************************* DELETE */}
     <button style={{backgroundColor: "white", borderStyle: "none", color: "rgb(236, 144, 144)", marginLeft: "95%"}}
       onClick={()=> handleDelete(post._id)} >
@@ -110,13 +148,13 @@ return (
         <div className="btn pink darken-2">
           <span style={{fontSize: 24}}>
             <ImageIcon /></span>
-          <input type="file" name="imageUrl" alt="" value={newPost.imageUrl} onChange={(e) => setImageSelected(e.target.files[0])} />
+          <input type="file" name="imageUrl" alt="" onChange={handleImageFile} />
         </div>
         <div className="file-path-wrapper">
           <input type="text" className="file-path validate" />
         </div>
       </div>
-      <button onClick={uploadImage} type="submit" style={{marginLeft: "88%"}} className="btn white-text pink darken-2">post</button>
+      <button type="submit" style={{marginLeft: "88%"}} className="btn white-text pink darken-2">post</button>
     </form>
   </div>
   <br />

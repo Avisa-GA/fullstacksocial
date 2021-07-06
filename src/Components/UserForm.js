@@ -2,8 +2,6 @@ import { useState } from "react";
 import { signUp, login } from "../services/firebase";
 import { uploadAvatar, createUser } from "../services/user-service";
 import { useHistory } from "react-router-dom";
-import { func } from "prop-types";
-import { message } from "statuses";
 
 export default function UserForm({isLogin}) {
 
