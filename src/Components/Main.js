@@ -34,18 +34,6 @@ setUserState(userState);
 return unsubscribe;
 }, [])
 
-// ********************* POSTS
-
-
-// when app run, already reload data
-useEffect(() => {
-if(userState) {
-getPosts(userState.uid);
-} else {
-getPosts();
-}
-
-}, [userState]);
 
 return (
 <div className="main">
