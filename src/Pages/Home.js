@@ -123,7 +123,7 @@ return posts.map((post, index) => (
 <ul key={index} className="collection">
   <li className="collection-item avatar">
     {/* ********************** AVATAR CONTENT */}
-    <img src={userState.avatarUrl} alert="" className="circle" />
+    <img src={userState.avatarUrl} alt="" className="circle" />
     {/* ----------------------- ADD USER NAME */}
     <span style={{marginRight: "80%", fontSize: 10, fontWeight: "bolder", color: "rgb(9, 107, 177)"}}
       className="title">{userState.firstName}</span>
