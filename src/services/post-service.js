@@ -30,7 +30,7 @@ async function createPost(post, token) {
 }
 
 async function deletePost(id, token) {
-    return fetch(URL + id, {
+    return fetch(URL + "/" + id, {
         method: "DELETE",
         headers: {
             "authorization": "bearer " + token

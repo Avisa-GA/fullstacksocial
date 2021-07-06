@@ -15,7 +15,7 @@ export default function Main() {
 
 // ********************* LOGIN / SIGNUP
 
-const [userState, setUserState] = useState(null);
+const [userState, setUserState] = useState([]);
 
 useEffect(() => {
   const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -28,8 +28,9 @@ useEffect(() => {
     }
   });
   return unsubscribe;
-}, []);
+}, [userState]);
 
+console.log("i am here from Main: ", userState)
 
 return (
 <div className="main">

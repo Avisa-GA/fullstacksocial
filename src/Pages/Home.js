@@ -7,7 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ImageIcon from '@material-ui/icons/Image';
 import { useHistory } from "react-router-dom";
 import { getPosts, createPost, uploadPostImage, deletePost  } from '../services/post-service';
-
+import { auth } from '../services/firebase';
 
 
 export default function Home({userState}) {
@@ -15,7 +15,7 @@ export default function Home({userState}) {
 // ******************* Create Post
 
 const [newPost, setNewPost] = useState(newForm());
-const [posts, setPosts] = useState(null);
+const [posts, setPosts] = useState([]);
 
 const history = useHistory();
 
@@ -41,9 +41,9 @@ const handleChange = (e) => {
 
 // ****************** Delete Post
 async function handleDelete(id) {
-  const token = await userState.getIdToken();
+  const token = await auth.currentUser.getIdToken()
   await deletePost(id, token);
-  getAllPosts(userState.uid);
+  getAllPosts(userState._id);
   history.push("/");
 }
 
@@ -51,7 +51,7 @@ async function handleDelete(id) {
 async function handleSubmit(e) {
      e.preventDefault();
      const {text} = newPost;
-     const token = await userState.getIdToken();
+     const token = await auth.currentUser.getIdToken()
      try {
 
       if(!userState) {
@@ -76,7 +76,7 @@ async function handleSubmit(e) {
       )
 
       setNewPost(newForm());
-      getAllPosts(userState.uid);
+      getAllPosts(userState._id);
       history.push("/");
 
      } catch ({message}) {
@@ -119,7 +119,7 @@ return ( <div style={{marginRight: "5%"}} className="preloader-wrapper active">
 
 // Load function
 const loaded = () => {
-return posts.map((post, index) => (
+return posts?.map((post, index) => (
 <ul key={index} className="collection">
   <li className="collection-item avatar">
     {/* ********************** AVATAR CONTENT */}
@@ -135,7 +135,7 @@ return posts.map((post, index) => (
     <div key={post._id} className="post">
       <p style={{fontSize: 12}} className="left-align">{post.text}</p>
       <div className="card-image center-align">
-        <img src={post.imageUrl} alt="" />
+        <img style={{width: 300}} src={post.imageUrl} alt="" />
       </div>
     </div>
   </li>
@@ -167,7 +167,7 @@ return (
   <br />
   <br />
   <br />
-  {/* {loaded()} */}
+  
   { posts ? loaded() : loading() }
 
 </div>
