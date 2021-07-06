@@ -9,30 +9,26 @@ import Search from '../Pages/Search';
 import Profile from '../Pages/Profile';
 import { signOut, auth } from "../services/firebase";
 import { getLoggedInUser } from "../services/user-service";
-import { useHistory } from 'react-router-dom';
-import { getPosts } from "../services/post-service";
-
 
 
 export default function Main() {
 
-const history = useHistory();
 // ********************* LOGIN / SIGNUP
 
 const [userState, setUserState] = useState(null);
 
 useEffect(() => {
-const unsubscribe = auth.onAuthStateChanged(async (userState) => {
-if (userState) {
-const {data} = await getLoggedInUser(userState);
-if (!data) await signOut();
-else setUserState({ ...userState, ...data });
-} else {
-setUserState(userState);
-}
-});
-return unsubscribe;
-}, [])
+  const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    if (user) {
+      const { data } = await getLoggedInUser(user);
+      if (!data) await signOut();
+      else setUserState({ ...user, ...data });
+    } else {
+      setUserState(user);
+    }
+  });
+  return unsubscribe;
+}, []);
 
 
 return (

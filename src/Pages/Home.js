@@ -65,7 +65,7 @@ async function handleSubmit(e) {
       if (newPost.imageUrl) {
         const data = new FormData();
         data.append("file", newPost.image);
-        data.append("upload_preset", "ml_default");
+        data.append("upload_preset", "ljxjnqss");
         imageData = await uploadPostImage(data);
       }
 

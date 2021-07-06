@@ -14,7 +14,7 @@ export default function UserForm({isLogin}) {
           password: "",
           firstName: "",
           lastName: "",
-          image: null,
+          avatarUrl: null,
           errors: ""
         };
       }
@@ -48,10 +48,10 @@ export default function UserForm({isLogin}) {
 
         let imageData;
 
-        if (state.image) {
+        if (state.avatarUrl) {
             const data = new FormData();
-            data.append("file", state.image);
-            data.append("upload_preset", "ml_default");
+            data.append("file", state.avatarUrl);
+            data.append("upload_preset", "ljxjnqss");
             imageData = await uploadAvatar(data);
         }
 
@@ -61,13 +61,14 @@ export default function UserForm({isLogin}) {
               lastName,
               email,
               firebaseUid: user.uid,
-              avatarURL: imageData ? imageData.data.secure_url : ""
+              avatarUrl: imageData ? imageData.data.secure_url : ""
             },
             token
           );
     
           setState(newForm());
           history.push("/login");
+
         } catch ({ message }) {
           setState({ ...newForm(), errors: message });
         }
