@@ -76,7 +76,7 @@ export default function UserForm({isLogin}) {
    
    function handleImageFile(e) {
        const file = e.target.files[0];
-       setState((prevState) => ({ ...prevState, image: file}));
+       setState((prevState) => ({ ...prevState, avatarUrl: file}));
    }
 
    const { firstName, lastName, email, password } = state;
