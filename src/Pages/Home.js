@@ -4,7 +4,6 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import CommentIcon from '@material-ui/icons/Comment';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Input } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import { useHistory } from "react-router-dom";
 import { getPosts, createPost, uploadPostImage, deletePost  } from '../services/post-service';
@@ -51,7 +50,7 @@ async function handleDelete(id) {
 // ******************* Submit Post (Create a new post)
 async function handleSubmit(e) {
      e.preventDefault();
-     const {text, imageUrl} = newPost;
+     const {text} = newPost;
      const token = await userState.getIdToken();
      try {
 
