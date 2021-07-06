@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Divider from '@material-ui/core/Divider';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import CommentIcon from '@material-ui/icons/Comment';
@@ -91,7 +91,14 @@ function handleImageFile(e) {
   setNewPost((prevState) => ({ ...prevState, imageUrl: file}));
 }
 
-
+// ************************ Load data useEffect
+useEffect(() => {
+  if(userState) {
+    getAllPosts(userState.uid);
+  } else {
+    getAllPosts();
+  }
+}, [userState]);
 
 // ************************************************ Show
 const loading = () => {
