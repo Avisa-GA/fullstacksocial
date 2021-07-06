@@ -93,7 +93,7 @@ function handleImageFile(e) {
 // ************************ Load data useEffect
 useEffect(() => {
   if(userState) {
-    getAllPosts(userState.uid);
+    getAllPosts(userState._id);
   } else {
     getAllPosts();
   }
