@@ -22,12 +22,9 @@ flexGrow: 1,
 },
 }));
 
-export default function Nav(props) {
+export default function Nav({userState}) {
 const classes = useStyles();
 
-function handleSignout() {
-signOut();
-}
 
 return (
 <AppBar position="static" className="pink darken-2">
@@ -36,25 +33,43 @@ return (
       <MenuBookIcon style={{fontSize: "50px", color: "rgb(251, 224, 233)"}} />
     </IconButton>
     <Typography className={classes.title}>
-      <Link to="/posts/home">
+      <Link to="/">
       <HomeIcon style={{color: "white"}} />
       </Link>
     </Typography>
     <Typography className={classes.title}>
-      <Link to="/posts/search">
+      <Link to="/search">
       <SearchIcon style={{color: "white"}} />
       </Link>
     </Typography>
     <Typography className={classes.title}>
-      <Link to="/posts/profile">
+      <Link to="/profile">
       <PersonIcon style={{color: "white"}} />
       </Link>
     </Typography>
-    <Typography className={classes.title}>
-      <Link to="/">
-      <button onClick={handleSignout} style={{borderStyle: "none", backgroundColor: "rgb(185, 26, 80)"}}>
-        <ExitToAppIcon style={{color: "white"}} /></button>
-      </Link>
+    <Typography style={{marginRight: "5%"}} className={classes.title}>
+                <ul className="right-align" style={{display: "flex", listStyle: "none", alignItems: "center"}}>
+                   {userState ? (
+                       <>
+                       <li>Welcome, {userState.firstname}</li>
+                       <li>
+                           <Link style={{color: "white"}} to="/" onClick={signOut}>Logout</Link>
+                       </li>
+                       <li>
+                           <img src={userState.avatarUrl} alt="" />
+                       </li>
+                       </>
+                   ) : (
+                       <>
+                       <li style={{marginLeft: "80%"}}>
+                           <Link style={{color: "white"}} to="/login">Login</Link>
+                       </li>
+                       <li style={{marginRight: "80%"}}>
+                           <Link style={{color: "white"}} to="/signup">Signup</Link>
+                       </li>
+                       </>
+                   )}
+                </ul>
     </Typography>
   </Toolbar>
 

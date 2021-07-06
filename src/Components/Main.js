@@ -1,149 +1,40 @@
 import 'materialize-css/dist/css/materialize.min.css';
 import React, {useState, useEffect} from "react";
-import Login from '../Pages/Login';
+import Login from "../Pages/Login";
+import Signup from "../Pages/Signup"
 import { Route, Switch } from "react-router-dom";
 import Nav from './Nav';
 import Home from '../Pages/Home';
 import Search from '../Pages/Search';
 import Profile from '../Pages/Profile';
-import {login, signUp, auth, signOut} from '../services/firebase';
-import axios from "axios";
+import { signOut, auth } from "../services/firebase";
+import { getLoggedInUser } from "../services/user-service";
 import { useHistory } from 'react-router-dom';
-import LoginNav from './LoginNav';
 
 
 
 export default function Main() {
 
-  const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dzsyqjq3i/image/upload"
-  const URL = "https://social-full-backend.herokuapp.com/"
+const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dzsyqjq3i/image/upload"
+const URL = "https://social-full-backend.herokuapp.com/post/"
 
-  const history = useHistory();
+const history = useHistory();
 // ********************* LOGIN / SIGNUP
 
-// for signup or login
-const [formMode, setFormMode] = useState({
-  loginEnabled: false
-  });
-  
-  // creating a new form
-  const [formState, setFormState] = useState(newForm());
-  
-  // user state
-  const [userState, setUserState] = useState(null);
-  
-  async function getLoggedInUser(user) {
-  const token = await user.getIdToken();
-  return axios({
-  method: "GET",
-  url: `${URL}api/users/login`,
-  headers: {
-    "authorization": "bearer " + token
-  }
-  });
-  }
-  
-  async function handleSignup(e) {
-  e.preventDefault();
-  const {email, password, firstname, lastname} = formState;
-  try {
-  const {user} = await signUp(email, password);
-  const token = await user.getIdToken();
-  let imageData;
-  
-  if (formState.image) {
-  // upload image to cloudinary
-  const data = new FormData();
-  data.append("file", formState.image);
-  data.append("upload_preset", "ml_default");
-  // fetch image from cloudinary
-  imageData = await axios({
-  url: CLOUDINARY_URL,
-  method: "POST",
-  data
-  });
+const [userState, setUserState] = useState(null);
 
-  history.push('/posts/home')
-  }
-  
-   await axios({
-  url: `${URL}api/users/signup`,
-  method: "POST",
-  headers: {
-    "authorization": "bearer " + token
-  },
-  data: {
-  firstname,
-  lastname,
-  email,
-  firebaseUid: user.uid,
-  avatarUrl: imageData ? imageData.data.secure_url : ""
-  }
-  });
-  
-  setFormState(newForm());
-  setFormMode({loginEnabled: true});
-  
-  } catch ({message}) {
-  setFormState({ ...newForm(), errors: message });
-  }
-  }
-  
-  async function handleLogin(e) {
-  e.preventDefault();
-  try {
-  const {email, password} = formState;
-  await login(email, password);
-  setFormState(newForm());
-  } catch ({message}) {
-  setFormState({ ...newForm(), errors: message });
-  }
-  history.push('/posts/home')
-  }
-  
-  function handleChange(e) {
-  setFormState((prevState) => ({
-  ...prevState,
-  [e.target.name]: e.target.value,
-  errors: ""
-  }));
-  }
-  
-  function handleImageFile(e) {
-  const file = e.target.files[0];
-  setFormState((prevState) => ({ ...prevState, image: file }));
-  }
-  
-  function handleSignout() {
-  signOut();
-  history.push('/')
-  }
-  
-  function newForm() {
-  return {
-  email: "",
-  password: "",
-  firstname: "",
-  lastname: "",
-  image: null,
-  errors: ""
-  };
-  }
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-    if (user) {
-    const {data} = await getLoggedInUser(user);
-    if (!data) await signOut();
-    setUserState({ ...user, ...data });
-    } else {
-    setUserState(user);
-    }
-    });
-    return unsubscribe;
-    }, []);
-  
-    const { loginEnabled } = formMode;
+useEffect(() => {
+const unsubscribe = auth.onAuthStateChanged(async (user) => {
+if (user) {
+const {data} = await getLoggedInUser(user);
+if (!data) await signOut();
+else setUserState({ ...user, ...data });
+} else {
+setUserState(user);
+}
+});
+return unsubscribe;
+}, [])
 
 // ********************* POSTS
 
@@ -154,18 +45,18 @@ const [posts, setPosts] = useState(null);
 // *************** SHOW ALL
 const getPosts = async (uid) => {
 const url = uid ? URL + '?uid=' + uid : URL
-const response = await fetch(`${url}post`);
+const response = await fetch(url);
 const data = await response.json();
 setPosts(data);
 };
 
 // **************** DELETE POST
 const deletePost= async id => {
-  const token = await userState.getIdToken();
-await fetch(`${URL}post/${id}`, {
+const token = await userState.getIdToken();
+await fetch(URL + id , {
 method: "DELETE",
 headers: {
-  "authorization": "bearer " + token
+"authorization": "bearer " + token
 }
 })
 getPosts(userState.uid);
@@ -173,52 +64,43 @@ getPosts(userState.uid);
 
 // ***************** CREATE POST
 const createPost = async (post) => {
-  const token = await userState.getIdToken();
-  // make post request to create people
-  await fetch(URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "Application/json",
-      "authorization": "bearer " + token
-    },
-    body: JSON.stringify(post),
-  });
-  // update list of people
-  getPosts(userState.uid);
+const token = await userState.getIdToken();
+// make post request to create people
+await fetch(URL, {
+method: "POST",
+headers: {
+"Content-Type": "Application/json",
+"authorization": "bearer " + token
+},
+body: JSON.stringify(post),
+});
+// update list of people
+getPosts(userState.uid);
 };
 
 // when app run, already reload data
 useEffect(() => {
-  if(userState) {
-    getPosts(userState.uid);
-  } else {
-    getPosts();
-  }
- 
+if(userState) {
+getPosts(userState.uid);
+} else {
+getPosts();
+}
+
 }, [userState]);
 
 return (
 <div className="main">
+  <Nav userState={userState} />
   <Switch>
-    <Route exact path="/">
-      <LoginNav/>
-    </Route>
-    <Route path="/posts">
-      <Nav/>
-      <Route path="/posts/home" render={rp=> (
-        <Home 
-        posts={posts} 
-        user={userState} 
-        deletePost={deletePost} 
-        createPost={createPost} 
-        {...rp} />
-        )} />
-        <Route path="/posts/search">
-          <Search />
-        </Route>
-        <Route path="/posts/profile">
-          <Profile />
-        </Route>
+    <Route exact path="/" render={rp=> (
+      <Home posts={posts} user={userState} deletePost={deletePost} createPost={createPost} {...rp} />
+      )}
+      />
+      <Route path="/search">
+        <Search />
+      </Route>
+      <Route path="/profile">
+        <Profile />
       </Route>
   </Switch>
 </div>
