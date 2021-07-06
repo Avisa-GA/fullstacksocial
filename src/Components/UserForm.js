@@ -67,7 +67,7 @@ export default function UserForm({isLogin}) {
           );
     
           setState(newForm());
-          history.push("/");
+          history.push("/login");
         } catch ({ message }) {
           setState({ ...newForm(), errors: message });
         }
@@ -82,8 +82,8 @@ export default function UserForm({isLogin}) {
 
  return(
      <>
-              <div className="login">
                 <form onSubmit={isLogin ? handleLogin : handleSignup}>
+                <div className="login">
                   <div style={{padding: "20%"}} className="card">
                   <h6 style={{fontWeight: "bold", color: "rgb(38, 156, 143)", marginBottom: "10%" , fontSize: 16}}>{ isLogin ? "Log into your account" : "Create New Account"}</h6>
                   {state.errors && (
@@ -119,8 +119,8 @@ export default function UserForm({isLogin}) {
                     </div>
 
                   </div>
+                  </div>
                   </form>
-              </div>
      </>
  )
 }
