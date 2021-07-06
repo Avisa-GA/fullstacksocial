@@ -16,7 +16,7 @@ export default function Home({userState}) {
 // ******************* Create Post
 
 const [newPost, setNewPost] = useState(newForm());
-const [posts, setPosts] = userState(null);
+const [posts, setPosts] = useState(null);
 
 const history = useHistory();
 
@@ -61,6 +61,7 @@ async function handleSubmit(e) {
       }
 
       let imageData;
+
       if (newPost.imageUrl) {
         const data = new FormData();
         data.append("file", newPost.image);
