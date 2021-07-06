@@ -39,7 +39,7 @@ return (
       <Home userState={userState}/>
       </Route>
       <Route path="/search">
-        <Search />
+        <Search userState={userState}/>
       </Route>
       <Route path="/profile">
         <Profile />

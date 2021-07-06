@@ -2,6 +2,13 @@ import axios from 'axios';
 const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dzsyqjq3i/image/upload"
 const URL = "https://social-full-backend.herokuapp.com/api/users"
 
+
+async function allUsers(uid) {
+   const url = uid ? URL + "?uid=" + uid : URL;
+   const response = await fetch(url);
+   return response.json();
+}
+
 async function getLoggedInUser(user) {
     const token = await user.getIdToken();
     return axios({
@@ -32,5 +39,5 @@ async function getLoggedInUser(user) {
     });
   }
   
-  export { getLoggedInUser, uploadAvatar, createUser };
+  export { getLoggedInUser, uploadAvatar, createUser, allUsers };
   
