@@ -50,8 +50,11 @@ async function handleDelete(id) {
 // ****************** handle Like
 async function handleLike(id) {
   const token = await auth.currentUser.getIdToken();
-  await addLike(id, token);
-  setHasLiked(true);
+  if(hasLiked) {
+    await addLike(id, token);
+  } else {
+    await addDislike(id, token);
+  }
   history.push("/");
 }
 
@@ -114,6 +117,8 @@ useEffect(() => {
     getAllPosts();
 }, []);
 
+console.log(posts);
+
 // *********************** CurrentUser
 
 // ************************************************ Show
@@ -162,13 +167,14 @@ return posts.map((post, index) => (
     {post.createdBy._id === userState._id ? <></>
      : 
      <>
-        <button style={{borderStyle: "none", backgroundColor: "white", color: hasLiked ? "red" : "lightgray"}} onClick={() => handleLike(post._id)}><FavoriteIcon /></button>
+        <button style={{borderStyle: "none", backgroundColor: "white", color: hasLiked ? "red" : "lightgray"}} onClick={handleLike(post._id)}><FavoriteIcon /></button>
         <CommentIcon style={{marginLeft: "2%", marginTop: "0.5%", color: "lightgray"}}/>
       </>
     }
     </div> 
   </li>
 </ul>
+
 ));
 };
 
