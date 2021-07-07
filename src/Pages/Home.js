@@ -158,7 +158,7 @@ return posts.map((post, index) => (
     {post.createdBy._id === userState._id ? <></>
      : 
      <>
-        <button style={{borderStyle: "none", backgroundColor: "white", color: hasLiked ? "red" : "lightgray"}} onClick={handleLike(post._id)}><FavoriteIcon /></button>
+        <button style={{borderStyle: "none", backgroundColor: "white", color: hasLiked ? "red" : "lightgray"}} onClick={() => handleLike(post._id)}><FavoriteIcon /></button>
         <CommentIcon style={{marginLeft: "2%", marginTop: "0.5%", color: "lightgray"}}/>
       </>
     }
