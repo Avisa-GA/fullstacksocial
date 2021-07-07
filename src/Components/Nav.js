@@ -30,7 +30,7 @@ const history = useHistory();
 
 async function handleSignout() {
   await signOut();
-  history.push("/login")
+  // history.push("/login")
 }
 
 
@@ -61,14 +61,14 @@ return (
                        <>
                        <li>Welcome, {userState.firstName}</li>
                        <li style={{color: "white", cursor: "pointer"}} onClick={handleSignout}>
-                           Logout
+                       <Link style={{color: "white", fontWeight: "bold"}} to="/login">Logout </Link>
                        </li>
                        <br />
                        <br />
                        <li>
                            <img style={{width: 38, height: 38, borderRadius: "50%"}} src={userState.avatarUrl} alt="" />
                        </li>
-                       </>
+                       </>  
                    ) : (
                        <>
                        <li style={{marginLeft: "80%"}}>

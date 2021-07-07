@@ -14,6 +14,7 @@ export default function UserForm({isLogin}) {
           password: "",
           firstName: "",
           lastName: "",
+          password: "",
           avatarUrl: null,
           errors: ""
         };
@@ -32,7 +33,7 @@ export default function UserForm({isLogin}) {
               const {email, password} = state;
               await login(email, password);
               setState(newForm());
-              history.push("/login");
+              history.push("/");
           } catch ({message}) {
               setState({ ...newForm(), errors: message })
           }
@@ -59,6 +60,7 @@ export default function UserForm({isLogin}) {
             {
               firstName,
               lastName,
+              password,
               email,
               firebaseUid: user.uid,
               avatarUrl: imageData ? imageData.data.secure_url : ""

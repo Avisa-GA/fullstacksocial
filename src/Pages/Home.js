@@ -10,7 +10,7 @@ import { getPosts, createPost, uploadPostImage, deletePost  } from '../services/
 import { auth } from '../services/firebase';
 
 
-export default function Home({userState, match}) {
+export default function Home({userState}) {
 
 // ******************* Create Post
 
@@ -123,10 +123,10 @@ return posts.map((post, index) => (
 <ul key={index} className="collection">
   <li className="collection-item avatar">
     {/* ********************** AVATAR CONTENT */}
-    <img src={userState.avatarUrl} alt="" className="circle" />
+    <img src={userState?.avatarUrl} alt="" className="circle" />
     {/* ----------------------- ADD USER NAME */}
     <span style={{marginRight: "80%", fontSize: 10, fontWeight: "bolder", color: "rgb(9, 107, 177)"}}
-      className="title">{userState.firstName}</span>
+      className="title">{userState?.firstName}</span>
     {/* ************************* DELETE */}
     <button style={{backgroundColor: "white", borderStyle: "none", color: "rgb(236, 144, 144)", marginLeft: "95%"}}
       onClick={()=> handleDelete(post._id)} >
