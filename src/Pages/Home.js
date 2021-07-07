@@ -153,6 +153,7 @@ return posts.map((post, index) => (
         <img style={{width: 510,height: 250, borderRadius: 15}} src={post.imageUrl} alt="" />
       </div>
     </div>
+      {/* **************************** LIKE */}
     <div style={{display: "flex"}} className="comments-likes">
     {post.createdBy._id === userState._id ? <></>
      : 
@@ -162,6 +163,7 @@ return posts.map((post, index) => (
       </>
     }
     </div> 
+      {/* **************************** */}
   </li>
 </ul>
 
