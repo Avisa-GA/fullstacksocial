@@ -5,7 +5,7 @@ import CommentIcon from '@material-ui/icons/Comment';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ImageIcon from '@material-ui/icons/Image';
 import { useHistory } from "react-router-dom";
-import { getPosts, createPost, uploadPostImage, deletePost  } from '../services/post-service';
+import { getPosts, createPost, uploadPostImage, deletePost, addLike, addDislike  } from '../services/post-service';
 import { auth } from '../services/firebase';
 
 
@@ -15,6 +15,7 @@ export default function Home({userState}) {
 
 const [newPost, setNewPost] = useState(newForm());
 const [posts, setPosts] = useState([]);
+const [hasLiked, setHasLiked] = useState(false);
 
 const history = useHistory();
 
@@ -45,6 +46,25 @@ async function handleDelete(id) {
   getAllPosts(userState._id);
   history.push("/");
 }
+
+// ****************** handle Like
+async function handleLike(id) {
+  const token = await auth.currentUser.getIdToken();
+  await addLike(id, token);
+  setHasLiked(true);
+  history.push("/");
+}
+
+
+// ****************** handle disLike
+async function handleDisike(id) {
+  const token = await auth.currentUser.getIdToken();
+  await addDislike(id, token);
+  setHasLiked(false);
+  history.push("/");
+}
+
+
 
 // ******************* Submit Post (Create a new post)
 async function handleSubmit(e) {
@@ -128,9 +148,7 @@ return posts.map((post, index) => (
     {/* ************************* DELETE */}
     { post.createdBy._id === userState._id ? <button style={{backgroundColor: "white", borderStyle: "none", color: "rgb(236, 144, 144)", marginLeft: "95%"}}
       onClick={()=> handleDelete(post._id)} >
-      <DeleteIcon /></button> : <button hidden style={{backgroundColor: "white", borderStyle: "none", color: "rgb(236, 144, 144)", marginLeft: "95%"}}
-      onClick={()=> handleDelete(post._id)} >
-      <DeleteIcon /></button> }
+      <DeleteIcon /></button> : <></> }
     
     {/* *********************************** */}
     <Divider />
@@ -140,9 +158,15 @@ return posts.map((post, index) => (
         <img style={{width: 510,height: 250, borderRadius: 15}} src={post.imageUrl} alt="" />
       </div>
     </div>
-    <div className="comments-likes">
-
-    </div>
+    <div style={{display: "flex"}} className="comments-likes">
+    {post.createdBy._id === userState._id ? <></>
+     : 
+     <>
+        <button style={{borderStyle: "none", backgroundColor: "white", color: hasLiked ? "red" : "lightgray"}} onClick={() => handleLike(post._id)}><FavoriteIcon /></button>
+        <CommentIcon style={{marginLeft: "2%", marginTop: "0.5%", color: "lightgray"}}/>
+      </>
+    }
+    </div> 
   </li>
 </ul>
 ));

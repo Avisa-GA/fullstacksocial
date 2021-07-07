@@ -38,4 +38,22 @@ async function deletePost(id, token) {
     });
 }
 
-export {getPosts, createPost, deletePost, uploadPostImage};
+async function addLike(id, token) {
+    return fetch(URL + "/" + id + "/like", {
+        method: "POST",
+        headers: {
+            "authorization": "bearer " + token
+        }
+    });
+}
+
+async function addDislike(id, token) {
+    return fetch(URL + "/" + id + "/dislike", {
+        method: "POST",
+        headers: {
+            "authorization": "bearer " + token
+        }
+    });
+}
+
+export {getPosts, createPost, deletePost, uploadPostImage, addLike, addDislike};
