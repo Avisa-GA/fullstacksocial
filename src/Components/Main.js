@@ -28,7 +28,7 @@ useEffect(() => {
     }
   });
   return unsubscribe;
-}, [userState]);
+}, []);
 
 
 return (
