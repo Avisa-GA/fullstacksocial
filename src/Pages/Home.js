@@ -27,8 +27,8 @@ function newForm() {
 }
 
 // ******************** Get all posts
-async function getAllPosts(uid) {
-  setPosts(await getPosts(uid));
+async function getAllPosts() {
+  setPosts(await getPosts());
 }
 // ******************** Change postState
 const handleChange = (e) => {
@@ -92,12 +92,11 @@ function handleImageFile(e) {
 
 // ************************ Load data useEffect
 useEffect(() => {
-  if(userState) {
-    getAllPosts(userState._id);
-  } else {
     getAllPosts();
-  }
-}, [userState]);
+  
+}, []);
+
+// *********************** CurrentUser
 
 // ************************************************ Show
 const loading = () => {
@@ -117,20 +116,24 @@ return ( <div style={{marginRight: "5%"}} className="preloader-wrapper active">
 );
 };
 
+
 // Load function
 const loaded = () => {
 return posts.map((post, index) => (
 <ul key={index} className="collection">
   <li className="collection-item avatar">
     {/* ********************** AVATAR CONTENT */}
-    <img src={userState?.avatarUrl} alt="" className="circle" />
+    <img src={post.createdBy.avatarUrl} alt="" className="circle" />
     {/* ----------------------- ADD USER NAME */}
     <span style={{marginRight: "80%", fontSize: 10, fontWeight: "bolder", color: "rgb(9, 107, 177)"}}
-      className="title">{userState?.firstName}</span>
+      className="title">{post.createdBy.firstName}</span>
     {/* ************************* DELETE */}
-    <button style={{backgroundColor: "white", borderStyle: "none", color: "rgb(236, 144, 144)", marginLeft: "95%"}}
+    { post.createdBy._id === userState._id ? <button style={{backgroundColor: "white", borderStyle: "none", color: "rgb(236, 144, 144)", marginLeft: "95%"}}
       onClick={()=> handleDelete(post._id)} >
-      <DeleteIcon /></button>
+      <DeleteIcon /></button> : <button hidden style={{backgroundColor: "white", borderStyle: "none", color: "rgb(236, 144, 144)", marginLeft: "95%"}}
+      onClick={()=> handleDelete(post._id)} >
+      <DeleteIcon /></button> }
+    
     {/* *********************************** */}
     <div key={post._id} className="post">
       <p style={{fontSize: 12}} className="left-align">{post.text}</p>
@@ -142,6 +145,7 @@ return posts.map((post, index) => (
 </ul>
 ));
 };
+
 
 
 return (
@@ -169,7 +173,6 @@ return (
   <br />
   
   { posts ? loaded() : loading() }
-
 </div>
 );
 };

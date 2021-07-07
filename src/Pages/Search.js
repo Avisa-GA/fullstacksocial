@@ -5,25 +5,20 @@ import { allUsers } from "../services/user-service";
 export default function Search({userState}) {
 
 const [users, setUsers] = useState([]);
-const [isFollowing, setIsFollowing] = useState(false)
 
 // **************** handle Change for following
 
 
 // ******************** Get All Users
-async function getAllUsers(uid) {
-    setUsers(await allUsers(uid));
+async function getAllUsers() {
+    setUsers(await allUsers());
 }
 
 
 // ************************ Load data useEffect
 useEffect(() => {
-    if(userState) {
-      getAllUsers(userState._id);
-    } else {
       getAllUsers();
-    }
-  }, [userState]);
+  }, []);
 
 
 // ************************** Loading
@@ -49,7 +44,7 @@ const loading = () => {
       return users.map((user, index) => {
         <ul key={index} className="collection with-header left-align">
         <li className="collection-header"><h4>Friends List</h4></li>
-        <li onChange={() => setIsFollowing(!isFollowing)} className="collection-item"><div>{user.firstName} {user.lastName}<a style={{marginBottom: "1%", color: "gray", fontWeight: "bold"}} class="waves-effect secondary-content waves-light btn-small pink lighten-4">{ isFollowing ? "Follow" : "Following" }</a></div></li>
+        <li className="collection-item"><div>{user.firstName} {user.lastName}<a style={{marginBottom: "1%", color: "gray", fontWeight: "bold"}} class="waves-effect secondary-content waves-light btn-small pink lighten-4">Follow</a></div></li>
       </ul>
       })
   }
