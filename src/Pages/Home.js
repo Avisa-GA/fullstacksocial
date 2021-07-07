@@ -158,10 +158,10 @@ return (
         <div className="btn pink darken-2">
           <span style={{fontSize: 24}}>
             <ImageIcon /></span>
-          <input type="file" name="imageUrl" alt="" onChange={handleImageFile} />
+          <input type="file" name="imageUrl" onChange={handleImageFile} />
         </div>
         <div className="file-path-wrapper">
-          <input type="text" className="file-path validate" />
+          <input className="file-path validate" type="text"/>
         </div>
       </div>
       <button type="submit" style={{marginLeft: "88%"}} className="btn white-text pink darken-2">post</button>
