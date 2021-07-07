@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import Divider from '@material-ui/core/Divider';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import CommentIcon from '@material-ui/icons/Comment';
-import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ImageIcon from '@material-ui/icons/Image';
 import { useHistory } from "react-router-dom";
@@ -124,7 +123,7 @@ return posts.map((post, index) => (
     {/* ********************** AVATAR CONTENT */}
     <img src={post.createdBy.avatarUrl} alt="" className="circle" />
     {/* ----------------------- ADD USER NAME */}
-    <span style={{marginRight: "100%", fontSize: 10, fontWeight: "bolder", color: "rgb(9, 107, 177)"}}
+    <span style={{marginRight: "100%", fontSize: 12, fontWeight: "bolder", color: "rgb(9, 107, 177)", paddingBottom: "10%"}}
       className="title">{post.createdBy.firstName}</span>
     {/* ************************* DELETE */}
     { post.createdBy._id === userState._id ? <button style={{backgroundColor: "white", borderStyle: "none", color: "rgb(236, 144, 144)", marginLeft: "95%"}}
@@ -134,11 +133,15 @@ return posts.map((post, index) => (
       <DeleteIcon /></button> }
     
     {/* *********************************** */}
+    <Divider />
     <div key={post._id} className="post">
       <p style={{fontSize: 12}} className="left-align">{post.text}</p>
       <div className="card-image center-align">
         <img style={{width: 510,height: 250, borderRadius: 15}} src={post.imageUrl} alt="" />
       </div>
+    </div>
+    <div className="comments-likes">
+
     </div>
   </li>
 </ul>
