@@ -59,16 +59,6 @@ async function handleLike(id) {
 }
 
 
-// ****************** handle disLike
-async function handleDisike(id) {
-  const token = await auth.currentUser.getIdToken();
-  await addDislike(id, token);
-  setHasLiked(false);
-  history.push("/");
-}
-
-
-
 // ******************* Submit Post (Create a new post)
 async function handleSubmit(e) {
      e.preventDefault();
