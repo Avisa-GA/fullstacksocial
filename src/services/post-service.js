@@ -1,6 +1,6 @@
 import axios from 'axios';
 const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dzsyqjq3i/image/upload"
-const POST_URL = "https://social-full-backend.herokuapp.com/post"
+const POST_URL = "https://social-app-end.herokuapp.com/post"
 
 
 async function getPosts(uid) {
