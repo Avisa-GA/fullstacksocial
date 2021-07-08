@@ -1,5 +1,6 @@
 import 'materialize-css/dist/css/materialize.min.css';
 import React, {useState, useEffect} from "react";
+import { AuthContext } from '../services/contex';
 import Login from "../Pages/Login";
 import Signup from "../Pages/Signup"
 import { Route, Switch } from "react-router-dom";
@@ -33,13 +34,14 @@ useEffect(() => {
 
 return (
 <div className="main">
-  <Nav userState={userState} />
+  <AuthContext.Provider value={{userState, setUserState}}>
+  <Nav />
   <Switch>
     <Route exact path="/" >
-      <Home userState={userState}/>
+      <Home />
       </Route>
       <Route path="/search">
-        <Search userState={userState}/>
+        <Search />
       </Route>
       <Route path="/profile">
         <Profile />
@@ -51,6 +53,7 @@ return (
         <Signup />
       </Route>
   </Switch>
+  </AuthContext.Provider>
 </div>
 );
 };

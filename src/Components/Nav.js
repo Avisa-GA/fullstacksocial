@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useContext} from "react";
+import { AuthContext } from "../services/contex";
 import { Link } from "react-router-dom";
 import SearchIcon from '@material-ui/icons/Search';
 import HomeIcon from '@material-ui/icons/Home';
@@ -22,8 +23,9 @@ flexGrow: 1,
 },
 }));
 
-export default function Nav({userState}) {
+export default function Nav(props) {
 
+const { userState, setUserState } = useContext(AuthContext);
 const classes = useStyles();
 const history = useHistory();
 

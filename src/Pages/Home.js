@@ -1,112 +1,134 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import { AuthContext } from '../services/contex';
 import Divider from '@material-ui/core/Divider';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import CommentIcon from '@material-ui/icons/Comment';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ImageIcon from '@material-ui/icons/Image';
 import { useHistory } from "react-router-dom";
-import { getPosts, createPost, uploadPostImage, deletePost, addLike, addDislike  } from '../services/post-service';
+import { getPosts, createPost, uploadPostImage, deletePost, addLike, addDislike, addComment } from
+'../services/post-service';
 import { auth } from '../services/firebase';
 
 
-export default function Home({userState}) {
+export default function Home(props) {
+
+  const { userState, setUerState } = useContext(AuthContext);
 
 // ******************* Create Post
 
 const [newPost, setNewPost] = useState(newForm());
 const [posts, setPosts] = useState([]);
+const [comment, setComment] = useState({
+  text: ""
+});
 
 const history = useHistory();
 
 function newForm() {
-  return {
-    text: "",
-    imageUrl: null
-  }
+return {
+text: "",
+imageUrl: null,
+}
 }
 
 // ******************** Get all posts
 async function getAllPosts() {
-  setPosts(await getPosts());
+setPosts(await getPosts());
 }
 // ******************** Change postState
 const handleChange = (e) => {
-  setNewPost((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-      errors: ""
-  }))
+setNewPost((prevState) => ({
+...prevState,
+[e.target.name]: e.target.value,
+errors: ""
+}))
 };
+
 
 // ****************** Delete Post
 async function handleDelete(id) {
-  const token = await auth.currentUser.getIdToken()
-  await deletePost(id, token);
-  getAllPosts(userState._id);
-  history.push("/");
+const token = await auth.currentUser.getIdToken()
+await deletePost(id, token);
+getAllPosts();
+history.push("/");
 }
 
 // ****************** handle Like
 async function handleLike(id) {
-  const token = await auth.currentUser.getIdToken();
-  const post = posts.find(p => p._id === id);
-  const hasLiked = post.likes.includes(userState._id);
-  if(hasLiked) {
-    await addDislike(id, token);
-  } else {
-    await addLike(id, token);
-  }
-  setPosts(await getPosts()); // Refresh the page
-  history.push("/");
+const token = await auth.currentUser.getIdToken();
+const post = posts.find(p => p._id === id);
+const hasLiked = post.likes.includes(userState._id);
+if(hasLiked) {
+await addDislike(id, token);
+} else {
+await addLike(id, token);
+}
+getAllPosts(); // Refresh the page
+history.push("/");
+}
+
+// ********************* handleComment
+async function handleSubmitComment(e) {
+e.preventDefault();
+const {text} = comment; // comment is useState
+const token = await auth.currentUser.getIdToken()
+await addComment({
+  text
+}
+  , token);
+
+getAllPosts();
+history.push("/");
 }
 
 
 // ******************* Submit Post (Create a new post)
 async function handleSubmit(e) {
-     e.preventDefault();
-     const {text} = newPost;
-     const token = await auth.currentUser.getIdToken()
-     try {
+e.preventDefault();
+const {text} = newPost;
+const token = await auth.currentUser.getIdToken()
+try {
 
-      if(!userState) {
-        alert("must be logged in")
-        return;
-      }
+if(!userState) {
+alert("must be logged in")
+return;
+}
 
-      let imageData;
+let imageData;
 
-      if (newPost.imageUrl) {
-        const data = new FormData();
-        data.append("file", newPost.imageUrl);
-        data.append("upload_preset", "ljxjnqss");
-        imageData = await uploadPostImage(data);
-      }
+if (newPost.imageUrl) {
+const data = new FormData();
+data.append("file", newPost.imageUrl);
+data.append("upload_preset", "ljxjnqss");
+imageData = await uploadPostImage(data);
+}
 
-      await createPost({
-         text,
-         imageUrl: imageData ? imageData.data.secure_url : ""
-      },
-      token
-      )
+await createPost({
+text,
+imageUrl: imageData ? imageData.data.secure_url : ""
+},
+token
+)
 
-      setNewPost(newForm());
-      getAllPosts(userState._id);
-      history.push("/");
+setNewPost(newForm());
+getAllPosts();
+history.push("/");
 
-     } catch ({message}) {
-       setNewPost({ ...newForm(), errors: message })
-     }
+} catch ({message}) {
+setNewPost({ ...newForm(), errors: message })
+}
 };
 
 // ************************ Image upload
 function handleImageFile(e) {
-  const file = e.target.files[0];
-  setNewPost((prevState) => ({ ...prevState, imageUrl: file}));
+const file = e.target.files[0];
+setNewPost((prevState) => ({ ...prevState, imageUrl: file}));
 }
 
 // ************************ Load data useEffect
 useEffect(() => {
-    getAllPosts();
+getAllPosts();
 }, []);
 
 console.log(posts);
@@ -140,13 +162,15 @@ return posts.map((post, index) => (
     {/* ********************** AVATAR CONTENT */}
     <img src={post.createdBy.avatarUrl} alt="" className="circle" />
     {/* ----------------------- ADD USER NAME */}
-    <span style={{marginRight: "100%", fontSize: 12, fontWeight: "bolder", color: "rgb(9, 107, 177)", paddingBottom: "10%"}}
+    <span
+      style={{marginRight: "100%", fontSize: 12, fontWeight: "bolder", color: "rgb(9, 107, 177)", paddingBottom: "10%"}}
       className="title">{post.createdBy.firstName}</span>
     {/* ************************* DELETE */}
-    { post.createdBy._id === userState._id ? <button style={{backgroundColor: "white", borderStyle: "none", color: "rgb(236, 144, 144)", marginLeft: "95%"}}
+    { post.createdBy._id === userState._id ? <button
+      style={{backgroundColor: "white", borderStyle: "none", color: "rgb(236, 144, 144)", marginLeft: "95%"}}
       onClick={()=> handleDelete(post._id)} >
       <DeleteIcon /></button> : <></> }
-    
+
     {/* *********************************** */}
     <Divider />
     <div key={post._id} className="post">
@@ -155,17 +179,34 @@ return posts.map((post, index) => (
         <img style={{width: 510,height: 250, borderRadius: 15}} src={post.imageUrl} alt="" />
       </div>
     </div>
-      {/* **************************** LIKE */}
+    {/* **************************** LIKE */}
     <div style={{display: "flex"}} className="comments-likes">
-    {post.createdBy._id === userState._id ? <></>
-     : 
-     <>
-        <button style={{borderStyle: "none", backgroundColor: "white", color: post.likes.includes(userState._id) ? "red" : "lightgray"}} onClick={() => handleLike(post._id)}><FavoriteIcon /></button>
-        <CommentIcon style={{marginLeft: "2%", marginTop: "0.5%", color: "lightgray"}}/>
-      </>
-    }
-    </div> 
-      {/* **************************** */}
+      {post.createdBy._id === userState._id ? <></>
+      :
+      <div>
+        <button
+          style={{marginRight: "80%", borderStyle: "none", backgroundColor: "white", color: post.likes.includes(userState._id) ? "red" : "lightgray"}}
+          onClick={()=> handleLike(post._id)}>
+          <FavoriteIcon /></button>
+
+        {/* *************************** COMMENT */}
+        {/* <div className="comment">
+            <div className="row">
+              <form onSubmit={handleSubmitComment} className="col s12">
+                <div className="row"> 
+                  <div className="input-field col s6">
+                    <CommentIcon style={{marginRight: "72%", marginTop: "0.5%", color: "lightgray"}} />
+                    <input type="text" name="text" onChange={(e) => setComment({...comment, text: e.target.value})}/>
+                    <button style={{borderStyle: "none", backgroundColor: "white", marginRight: "10%", color: "lightgray"}} type="submit">Comment</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+        </div> */}
+      </div>
+      }
+    </div>
+    {/* **************************** */}
   </li>
 </ul>
 
@@ -188,7 +229,7 @@ return (
           <input type="file" name="imageUrl" onChange={handleImageFile} />
         </div>
         <div className="file-path-wrapper">
-          <input className="file-path validate" type="text"/>
+          <input className="file-path validate" type="text" />
         </div>
       </div>
       <button type="submit" style={{marginLeft: "88%"}} className="btn white-text pink darken-2">post</button>
@@ -197,7 +238,7 @@ return (
   <br />
   <br />
   <br />
-  
+
   { posts && userState ? loaded() : loading() }
 </div>
 );
