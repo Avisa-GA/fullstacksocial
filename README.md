@@ -19,7 +19,7 @@ Thank you again to our Instructor <strong>Daniel Scott</strong> for offering me 
 ## Images of working app
 ![Screen Shot 2021-07-08 at 3 56 35 PM](https://user-images.githubusercontent.com/83556668/125000447-44e13400-e005-11eb-9e06-3e13cef291dd.png)
 ![Screen Shot 2021-07-08 at 12 45 05 PM](https://user-images.githubusercontent.com/83556668/125000451-4874bb00-e005-11eb-820b-642c4cb3b62b.png)
-![Screen Shot 2021-07-08 at 12 46 32 PM](https://user-images.githubusercontent.com/83556668/125000470-53c7e680-e005-11eb-93fb-14e17a7a0e57.png)
+![Screen Shot 2021-07-08 at 3 59 47 PM](https://user-images.githubusercontent.com/83556668/125000601-97baeb80-e005-11eb-938e-de804154b421.png)
 
 
 ## Getting Started
