@@ -4,7 +4,7 @@ const URL = "https://social-full-backend.herokuapp.com/api/users"
 
 
 async function allUsers(uid) {
-   const url = uid ? URL + "?uid=" + uid : URL;
+  //  const url = uid ? URL + "?uid=" + uid : URL;
    const response = await fetch(URL);
    return response.json();
 }

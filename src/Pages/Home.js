@@ -15,7 +15,6 @@ export default function Home({userState}) {
 
 const [newPost, setNewPost] = useState(newForm());
 const [posts, setPosts] = useState([]);
-const [hasLiked, setHasLiked] = useState(false);
 
 const history = useHistory();
 
@@ -50,11 +49,14 @@ async function handleDelete(id) {
 // ****************** handle Like
 async function handleLike(id) {
   const token = await auth.currentUser.getIdToken();
+  const post = posts.find(p => p._id === id);
+  const hasLiked = post.likes.includes(userState._id);
   if(hasLiked) {
-    await addLike(id, token);
-  } else {
     await addDislike(id, token);
+  } else {
+    await addLike(id, token);
   }
+  setPosts(await getPosts()); // Refresh the page
   history.push("/");
 }
 
@@ -158,7 +160,7 @@ return posts.map((post, index) => (
     {post.createdBy._id === userState._id ? <></>
      : 
      <>
-        <button style={{borderStyle: "none", backgroundColor: "white", color: hasLiked ? "red" : "lightgray"}} onClick={() => handleLike(post._id)}><FavoriteIcon /></button>
+        <button style={{borderStyle: "none", backgroundColor: "white", color: post.likes.includes(userState._id) ? "red" : "lightgray"}} onClick={() => handleLike(post._id)}><FavoriteIcon /></button>
         <CommentIcon style={{marginLeft: "2%", marginTop: "0.5%", color: "lightgray"}}/>
       </>
     }
@@ -196,7 +198,7 @@ return (
   <br />
   <br />
   
-  { posts ? loaded() : loading() }
+  { posts && userState ? loaded() : loading() }
 </div>
 );
 };
