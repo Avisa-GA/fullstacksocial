@@ -1,6 +1,6 @@
 # Social Web App
 
-My project is a Social website, Users were able to share their thoughts with each other, also share photos, and comment on each other's post and like it . and users must Signup first , and then login, and They can enter to website.
+My project is a Social website, Users were able to share their thoughts with each other, and like each others posts. users must Signup first , and then login, and They can enter to the website.
 
 ## Technologies
 - REACT | NodeJs
