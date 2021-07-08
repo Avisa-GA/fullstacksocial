@@ -1,10 +1,10 @@
 import axios from 'axios';
 const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dzsyqjq3i/image/upload"
-const URL = "https://social-full-backend.herokuapp.com/post"
+const POST_URL = "https://social-full-backend.herokuapp.com/post"
 
 
 async function getPosts(uid) {
-    const url = uid ? URL + '?uid=' + uid : URL;
+    const url = uid ? POST_URL + '?uid=' + uid : POST_URL;
     const response = await fetch(url);
     return response.json();
 };
@@ -19,7 +19,7 @@ function uploadPostImage(data) {
 
 
 async function createPost(post, token) {
-    return fetch(URL, {
+    return fetch(POST_URL, {
         method: "POST",
         headers: {
             "Content-Type": "Application/json",
@@ -30,7 +30,7 @@ async function createPost(post, token) {
 }
 
 async function deletePost(id, token) {
-    return fetch(URL + "/" + id, {
+    return fetch(POST_URL + "/" + id, {
         method: "DELETE",
         headers: {
             "authorization": "bearer " + token
@@ -39,7 +39,7 @@ async function deletePost(id, token) {
 }
 
 async function addLike(id, token) {
-    return fetch(URL + "/" + id + "/like", {
+    return fetch(POST_URL + "/" + id + "/like", {
         method: "POST",
         headers: {
             "authorization": "bearer " + token
@@ -48,7 +48,7 @@ async function addLike(id, token) {
 }
 
 async function addDislike(id, token) {
-    return fetch(URL + "/" + id + "/dislike", {
+    return fetch(POST_URL + "/" + id + "/dislike", {
         method: "POST",
         headers: {
             "authorization": "bearer " + token
