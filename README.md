@@ -14,7 +14,7 @@ Thank you to our Instructor <strong>Daniel Scott</strong> for offering me great 
 ![SocialWebApp-framework](https://user-images.githubusercontent.com/83556668/124980806-b01d0d00-dfe9-11eb-8955-fb03c49b9dd6.png)
 
 ## ERD
-![SocialApp ERD]()
+![SocialWebApp](https://user-images.githubusercontent.com/83556668/124980878-c88d2780-dfe9-11eb-9efb-2b192e791787.png)
 
 ## Images of working app
 
