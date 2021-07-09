@@ -56,15 +56,13 @@ async function addDislike(id, token) {
     });
 }
 
-async function addComment(comment, token) {
-    return fetch(POST_URL, {
+async function addComment(id, token) {
+    return fetch(POST_URL + "/" + id + "/comment", {
         method: "POST",
         headers: {
-            "Content-Type": "Application/json",
             "authorization": "bearer " + token
-        },
-        body: JSON.stringify(comment)
-    })
+        }
+    });
 }
 
 export {getPosts, createPost, deletePost, uploadPostImage, addLike, addDislike, addComment};
