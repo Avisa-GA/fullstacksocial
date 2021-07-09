@@ -5,7 +5,7 @@ My project is a Social website, Users are able to share their thoughts and photo
 ## Technologies
 - REACT | NodeJs
 - [Cloudinary](https://cloudinary.com/home-6-4-video-b)
-- [Google Auth](https://console.cloud.google.com/home/dashboard)
+- [Firebase Auth](https://console.cloud.google.com/home/dashboard)
 - [Mongo DB](https://www.mongodb.com/)
 - [MaterializeCss](https://materializecss.com)
 
