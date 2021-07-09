@@ -34,11 +34,11 @@ useEffect(() => {
 
 return (
 <div className="main">
-  <AuthContext.Provider value={{userState, setUserState}}>
-  <Nav />
+ <AuthContext.Provider value={userState}>
+  <Nav userState={userState}/>
   <Switch>
     <Route exact path="/" >
-      <Home />
+      <Home userState={userState}/>
       </Route>
       <Route path="/search">
         <Search />

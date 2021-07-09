@@ -25,14 +25,13 @@ flexGrow: 1,
 
 export default function Nav(props) {
 
-const { userState, setUserState } = useContext(AuthContext);
+  const {userState, setUserState} = useContext(AuthContext);
 const classes = useStyles();
 const history = useHistory();
 
 
 async function handleSignout() {
   await signOut();
-  // history.push("/login")
 }
 
 

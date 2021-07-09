@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { AuthContext } from '../services/contex';
+import {AuthContext} from "../services/contex";
 import Divider from '@material-ui/core/Divider';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import CommentIcon from '@material-ui/icons/Comment';
@@ -13,15 +13,12 @@ import { auth } from '../services/firebase';
 
 export default function Home(props) {
 
-  const { userState, setUerState } = useContext(AuthContext);
-
+  const {userState, setUserState} = useContext(AuthContext);
 // ******************* Create Post
 
 const [newPost, setNewPost] = useState(newForm());
 const [posts, setPosts] = useState([]);
-const [comment, setComment] = useState({
-  text: ""
-});
+
 
 const history = useHistory();
 
@@ -68,19 +65,6 @@ getAllPosts(); // Refresh the page
 history.push("/");
 }
 
-// ********************* handleComment
-async function handleSubmitComment(e) {
-e.preventDefault();
-const {text} = comment; // comment is useState
-const token = await auth.currentUser.getIdToken()
-await addComment({
-  text
-}
-  , token);
-
-getAllPosts();
-history.push("/");
-}
 
 
 // ******************* Submit Post (Create a new post)
