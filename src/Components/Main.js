@@ -34,7 +34,6 @@ useEffect(() => {
 
 return (
 <div className="main">
- <AuthContext.Provider value={userState}>
   <Nav userState={userState}/>
   <Switch>
     <Route exact path="/" >
@@ -53,7 +52,6 @@ return (
         <Signup />
       </Route>
   </Switch>
-  </AuthContext.Provider>
 </div>
 );
 };

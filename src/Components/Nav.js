@@ -23,9 +23,8 @@ flexGrow: 1,
 },
 }));
 
-export default function Nav(props) {
+export default function Nav({userState}) {
 
-  const {userState, setUserState} = useContext(AuthContext);
 const classes = useStyles();
 const history = useHistory();
 

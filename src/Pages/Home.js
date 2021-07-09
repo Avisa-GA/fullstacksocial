@@ -11,9 +11,9 @@ import { getPosts, createPost, uploadPostImage, deletePost, addLike, addDislike,
 import { auth } from '../services/firebase';
 
 
-export default function Home(props) {
+export default function Home({userState}) {
 
-  const {userState, setUserState} = useContext(AuthContext);
+
 // ******************* Create Post
 
 const [newPost, setNewPost] = useState(newForm());
