@@ -65,6 +65,13 @@ getAllPosts(); // Refresh the page
 history.push("/");
 }
 
+// ************************ handleComment
+async function handleSubmitComment(e) {
+  const token = await auth.currentUser.getIdToken();
+  await addComment(userState._id, token);
+  getAllPosts('/');
+  history.push('/');
+}
 
 
 // ******************* Submit Post (Create a new post)
