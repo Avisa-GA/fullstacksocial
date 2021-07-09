@@ -167,7 +167,7 @@ return posts.map((post, index) => (
     <div key={post._id} className="post">
       <p style={{fontSize: 12}} className="left-align">{post.text}</p>
       <div className="card-image center-align">
-        <img style={{width: 510,height: 250, borderRadius: 15}} src={post.imageUrl} alt="" />
+        <img style={{width: 400,height: 300, borderRadius: 15}} src={post.imageUrl} alt="" />
       </div>
     </div>
     {/* **************************** LIKE */}
