@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from "react";
-import { allUsers } from "../services/user-service";
+import {auth} from "../services/firebase";
+import { allUsers, allFolowers, follow, unfollow } from "../services/user-service";
 
 export default function Search({userState}) {
 
@@ -14,7 +15,17 @@ async function getAllUsers() {
     setUsers(await allUsers());
 }
 
-
+// *********************** Follow / unFollow
+async function handleFollow(id) {
+  const token = await auth.currentUser.getIdToken();
+  const user = users.find(user => user._id === id);
+  const hasFollowed = user.following.includes(userState._id);
+  if(hasFollowed) {
+  await unfollow(id, token);
+  } else {
+  await follow(id, token);
+  }
+}
 // ************************ Load data useEffect
 useEffect(() => {
       getAllUsers();
