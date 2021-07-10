@@ -1,11 +1,12 @@
 # Social Web App
 
 My project is a Social website, Users are able to share their thoughts and photos with each other, and like each others posts.Also users must Signup first , and then login, and They can enter to the website.
+Thank You <strong>Daniel Scott</strong> for helping me to learn more complex functionality with react.
 
 ## Technologies
 - REACT | NodeJs
 - [Cloudinary](https://cloudinary.com/home-6-4-video-b)
-- [Google Auth](https://console.cloud.google.com/home/dashboard)
+- [Firebase Auth](https://console.cloud.google.com/home/dashboard)
 - [Mongo DB](https://www.mongodb.com/)
 - [MaterializeCss](https://materializecss.com)
 
