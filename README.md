@@ -2,7 +2,7 @@
 
 My project is a Social website, Users are able to share their thoughts and photos with each other, and like each others posts.Also users must Signup first , and then login, and They can enter to the website.
 
-My Special Thank You <strong>Daniel Scott</strong> for helping me to learn more complex functionality with react.
+My Special Thank You to <strong>Daniel Scott</strong> for helping me to learn more complex functionality with react. 💫
 
 ## Technologies
 - REACT | NodeJs
