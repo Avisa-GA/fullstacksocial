@@ -3,9 +3,9 @@ const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dzsyqjq3i/image/upload"
 const POST_URL = "https://social-app-end.herokuapp.com/post"
 
 
-async function getPosts(uid) {
-    const url = uid ? POST_URL + '?uid=' + uid : POST_URL;
-    const response = await fetch(url);
+async function getPosts() {
+    // const url = uid ? POST_URL + '?uid=' + uid : POST_URL;
+    const response = await fetch(POST_URL);
     return response.json();
 };
 

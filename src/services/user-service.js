@@ -3,7 +3,7 @@ const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dzsyqjq3i/image/upload"
 const USER_URL = "https://social-app-end.herokuapp.com/api/users"
 
 
-async function allUsers(uid) {
+async function allUsers() {
   //  const url = uid ? URL + "?uid=" + uid : URL;
    const response = await fetch(USER_URL);
    return response.json();
@@ -11,7 +11,7 @@ async function allUsers(uid) {
 // *************************** Followers
 async function allFolowers(user) {
   const token = await user.getIdToken();
-    const response = await fetch(USER_URL + "/" + user._id + "followers", {
+    const response = await fetch(USER_URL + "/followers", {
       method: "GET",
       headers: {
         "Content-Type": "Application/json",
