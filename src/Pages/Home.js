@@ -33,12 +33,11 @@ imageUrl: null,
 
 // ******************** Get all posts
 async function getAllPosts() {
-  if(isLoading) {
-setPosts(await getPosts());
-setIsLoading(true);
+  setPosts(await getPosts());
+  if(posts === null) {
+    setIsLoading(true);
   } else {
     setIsLoading(false);
-    setPosts(await getPosts());
   }
 }
 // ******************** Change postState
@@ -156,9 +155,6 @@ return ( <div style={{marginRight: "5%"}} className="preloader-wrapper active">
 
 // Load function
 const loaded = () => {
-  if(!isLoading) {
-    return loading();
-  } 
 return posts.map((post, index) => (
 <ul key={index} className="collection">
   <li className="collection-item avatar">
@@ -229,8 +225,8 @@ return (
   <br />
   <br />
   <br />
-{loaded()}
-  {/* { posts && isLoading ? loaded() : loading() } */}
+{/* {loaded()} */}
+  { posts && isLoading && userState ? loaded() : loading() }
 </div>
 );
 };
