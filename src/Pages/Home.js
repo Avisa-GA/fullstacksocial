@@ -6,6 +6,7 @@ import CommentIcon from '@material-ui/icons/Comment';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ImageIcon from '@material-ui/icons/Image';
 import { useHistory } from "react-router-dom";
+import CommnetAdd from './CommentAdd';
 import { getPosts, createPost, uploadPostImage, deletePost, addLike, addDislike, addComment } from
 '../services/post-service';
 import { auth } from '../services/firebase';
@@ -67,6 +68,7 @@ history.push("/");
 
 // ************************ handleComment
 async function handleSubmitComment(e) {
+  e.preventDefault()
   const token = await auth.currentUser.getIdToken();
   await addComment(userState._id, token);
   getAllPosts('/');
@@ -181,19 +183,7 @@ return posts.map((post, index) => (
           <FavoriteIcon /></button>
 
         {/* *************************** COMMENT */}
-        {/* <div className="comment">
-            <div className="row">
-              <form onSubmit={handleSubmitComment} className="col s12">
-                <div className="row"> 
-                  <div className="input-field col s6">
-                    <CommentIcon style={{marginRight: "72%", marginTop: "0.5%", color: "lightgray"}} />
-                    <input type="text" name="text" onChange={(e) => setComment({...comment, text: e.target.value})}/>
-                    <button style={{borderStyle: "none", backgroundColor: "white", marginRight: "10%", color: "lightgray"}} type="submit">Comment</button>
-                  </div>
-                </div>
-              </form>
-            </div>
-        </div> */}
+        <CommnetAdd />
       </div>
       }
     </div>

@@ -20,7 +20,9 @@ useEffect(() => {
       getAllUsers();
   }, []);
 
-
+console.log("users are here" ,users.map((user,index) => {
+  return user.firstName
+}))
 // ************************** Loading
 
 const loading = () => {
@@ -41,16 +43,17 @@ const loading = () => {
     };
 
   const loaded = () => {
-      return users.map((user, index) => {
-        <ul key={index} className="collection with-header left-align">
-        <li className="collection-header"><h4>Friends List</h4></li>
-        <li className="collection-item"><div>{user.firstName} {user.lastName}<a style={{marginBottom: "1%", color: "gray", fontWeight: "bold"}} class="waves-effect secondary-content waves-light btn-small pink lighten-4">Follow</a></div></li>
+    return users.map((user, index) => (
+      <ul key={index} className="collection with-header">
+        <li className="collection-item"><div><p className="left-align">{user.firstName}</p><button style={{marginBottom: "5%"}} className="btn pink darken-2 secondary-content" >Follow</button></div></li>
       </ul>
-      })
+    ))
   }
   
     return (
-        <div style={{marginLeft: "10%", marginTop: "5%"}} className="home-card">
+        <div style={{marginLeft: "10%", marginTop: "5%", width: 300}}>
+          <h4 className="left-align">Friends List</h4>
+          {loaded()}
         {users ? loaded() : loading() }
         </div>
     )
