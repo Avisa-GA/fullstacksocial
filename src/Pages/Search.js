@@ -65,7 +65,6 @@ const loading = () => {
     return (
         <div style={{marginLeft: "10%", marginTop: "5%", width: 300}}>
           <h4 className="left-align">Friends List</h4>
-          {loaded()}
         {users ? loaded() : loading() }
         </div>
     )

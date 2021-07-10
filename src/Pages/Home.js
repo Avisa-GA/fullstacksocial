@@ -38,6 +38,7 @@ setPosts(await getPosts());
 setIsLoading(true);
   } else {
     setIsLoading(false);
+    setPosts(await getPosts());
   }
 }
 // ******************** Change postState
@@ -155,7 +156,7 @@ return ( <div style={{marginRight: "5%"}} className="preloader-wrapper active">
 
 // Load function
 const loaded = () => {
-  if(isLoading) {
+  if(!isLoading) {
     return loading();
   } 
 return posts.map((post, index) => (
@@ -228,8 +229,8 @@ return (
   <br />
   <br />
   <br />
-
-  { posts && userState ? loaded() : loading() }
+{loaded()}
+  {/* { posts && isLoading ? loaded() : loading() } */}
 </div>
 );
 };
