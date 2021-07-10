@@ -19,6 +19,7 @@ export default function Home({userState}) {
 
 const [newPost, setNewPost] = useState(newForm());
 const [posts, setPosts] = useState([]);
+const [isLoading, setIsLoading] = useState(false);
 
 
 const history = useHistory();
@@ -32,7 +33,12 @@ imageUrl: null,
 
 // ******************** Get all posts
 async function getAllPosts() {
+  if(isLoading) {
 setPosts(await getPosts());
+setIsLoading(true);
+  } else {
+    setIsLoading(false);
+  }
 }
 // ******************** Change postState
 const handleChange = (e) => {
@@ -149,6 +155,9 @@ return ( <div style={{marginRight: "5%"}} className="preloader-wrapper active">
 
 // Load function
 const loaded = () => {
+  if(isLoading) {
+    return loading();
+  } 
 return posts.map((post, index) => (
 <ul key={index} className="collection">
   <li className="collection-item avatar">
@@ -191,7 +200,7 @@ return posts.map((post, index) => (
   </li>
 </ul>
 
-));
+    ));
 };
 
 
