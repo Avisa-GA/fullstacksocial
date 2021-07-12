@@ -19,7 +19,6 @@ export default function Home({userState}) {
 
 const [newPost, setNewPost] = useState(newForm());
 const [posts, setPosts] = useState([]);
-const [isLoading, setIsLoading] = useState(false);
 
 
 const history = useHistory();
@@ -34,11 +33,6 @@ imageUrl: null,
 // ******************** Get all posts
 async function getAllPosts() {
   setPosts(await getPosts());
-  if(posts === null) {
-    setIsLoading(true);
-  } else {
-    setIsLoading(false);
-  }
 }
 // ******************** Change postState
 const handleChange = (e) => {
@@ -226,7 +220,7 @@ return (
   <br />
   <br />
 {/* {loaded()} */}
-  { posts && isLoading && userState ? loaded() : loading() }
+  { posts ? loaded() : loading() }
 </div>
 );
 };
