@@ -34,10 +34,10 @@ useEffect(() => {
 
 return (
 <div className="main">
-  <Nav userState={userState} setUserState={setUserState}/>
+  <Nav userState={userState} />
   <Switch>
     <Route exact path="/" >
-      <Home userState={userState} setUserState={setUserState}/>
+      <Home userState={userState} />
       </Route>
       <Route path="/search">
         <Search />
