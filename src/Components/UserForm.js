@@ -14,7 +14,6 @@ export default function UserForm({isLogin}) {
           passwordConf: "",
           firstName: "",
           lastName: "",
-          password: "",
           image: null,
           errors: ""
         };
@@ -70,7 +69,7 @@ export default function UserForm({isLogin}) {
          });
        } else {
          setFormState(newForm());
-         history.push("/");
+         history.push("/login");
        }
      } catch ({ message }) {
        setFormState({ ...newForm(), errors: message });
@@ -118,12 +117,12 @@ export default function UserForm({isLogin}) {
                     </div>
                     {!isLogin && (
                     <div className="passwordConf">
-                        <input type="password" className="validate" name="passwordConf" placeholder="p@$$w0rd" value={password}
+                        <input type="password" className="validate" name="passwordConf" placeholder="p@$$w0rd" value={passwordConf}
                             style={{fontSize: 12}} onChange={handleChange} />
                     </div>
                     )}
                     <div className="submit">
-                    <input style={{width: "100%", fontSize: "12px", marginTop: "5%"}}
+                    <input style={{width: "100%", fontSize: "12px", marginTop: "5%"}} disabled={!matchingPassword()}
                        className="waves-effect waves-light btn" type="submit" value={isLogin ? "Login"
                          : "Signup" } />
                     </div>
