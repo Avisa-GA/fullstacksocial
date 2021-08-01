@@ -8,6 +8,7 @@
 
 import firebase from "firebase/app";
 import 'firebase/auth';
+import 'firebase/database'
 
 
 const config = {
@@ -23,17 +24,24 @@ const config = {
   firebase.initializeApp(config);
 
   const auth = firebase.auth();
+  const database = firebase.database();
+
+  const googleProvider = new firebase.auth.GoogleAuthProvider();
   
   function signUp(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
   }
-  
+
+  function signInWithGoogle() {
+    return auth.signInWithPopup(googleProvider);
+  }
+
   function login(email, password) {
     return auth.signInWithEmailAndPassword(email, password);
   }
-  
+
   function signOut() {
     return auth.signOut();
   }
-  
-  export { signUp, signOut, login, auth };
+
+  export { signUp, signOut, login, auth, signInWithGoogle, database };

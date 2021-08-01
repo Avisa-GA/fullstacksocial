@@ -1,87 +1,88 @@
 import { useState } from "react";
-import { signUp, login } from "../services/firebase";
-import { uploadAvatar, createUser } from "../services/user-service";
+import { createUser, loginUser } from "../services/user-service";
 import { useHistory } from "react-router-dom";
 
 export default function UserForm({isLogin}) {
 
-    const [state, setState] = useState(newForm());
+  const [formState, setFormState] = useState(newForm());
     const history = useHistory();
 
     function newForm() {
         return {
           email: "",
           password: "",
+          passwordConf: "",
           firstName: "",
           lastName: "",
           password: "",
-          avatarUrl: null,
+          image: null,
           errors: ""
         };
       }
 
-      function handleChange(e) {
-        setState((prevState) => ({
-          ...prevState,
-          [e.target.name]: e.target.value,
-          errors: ""
-        }));
-      }
-    async function handleLogin(e) {
-          e.preventDefault();
-          try {
-              const {email, password} = state;
-              await login(email, password);
-              setState(newForm());
-              history.push("/");
-          } catch ({message}) {
-              setState({ ...newForm(), errors: message })
-          }
-      }
-
-   async function handleSignup(e) {
-       e.preventDefault();
-       const {email, password, firstName, lastName} = state;
-       try {
-
-        const {user} = await signUp(email, password);
-        const token = await user.getIdToken();
-
-        let imageData;
-
-        if (state.avatarUrl) {
-            const data = new FormData();
-            data.append("file", state.avatarUrl);
-            data.append("upload_preset", "ljxjnqss");
-            imageData = await uploadAvatar(data);
-        }
-
-        await createUser(
-            {
-              firstName,
-              lastName,
-              password,
-              email,
-              firebaseUid: user.uid,
-              avatarUrl: imageData ? imageData.data.secure_url : ""
-            },
-            token
-          );
-    
-          setState(newForm());
-          history.push("/login");
-
-        } catch ({ message }) {
-          setState({ ...newForm(), errors: message });
-        }
-      }
-   
-   function handleImageFile(e) {
-       const file = e.target.files[0];
-       setState((prevState) => ({ ...prevState, avatarUrl: file}));
+   function matchingPassword() {
+     if (isLogin) return true;
+     return password === passwordConf;
    }
 
-   const { firstName, lastName, email, password } = state;
+   function formValid() {
+     const { email, password } = formState;
+     return !!email && !!password
+   }
+
+   function handleChange(e) {
+     setFormState((prevState) => ({
+       ...prevState,
+       [e.target.name]: e.target.value,
+       errors: ''
+     }));
+   }
+
+   async function handleLogin(e) {
+
+     e.preventDefault();
+     if (!formValid()) return;
+
+     try {
+
+      const { email, password } = formState;
+      await loginUser(email, password);
+
+      setFormState(newForm());
+
+      history.push('/');
+
+     } catch ({ message }) {
+       setFormState({ ...newForm(), errors: message })
+     }
+
+   }
+
+  async function handleSignup(e) {
+     e.preventDefault();
+     if (!formValid()) return;
+     try {
+       const userCreated = await createUser(formState);
+       if (!userCreated) {
+         setFormState({
+           ...newForm(),
+           errors: "An Error Occurred Creating Account"
+         });
+       } else {
+         setFormState(newForm());
+         history.push("/");
+       }
+     } catch ({ message }) {
+       setFormState({ ...newForm(), errors: message });
+     }
+   }
+
+   function handleImageFile(e) {
+    const file = e.target.files[0];
+    setFormState((prevState) => ({ ...prevState, image: file }));
+  }
+
+   const { firstName, lastName, email, password, passwordConf } = formState;
 
  return(
      <>
@@ -89,8 +90,8 @@ export default function UserForm({isLogin}) {
                 <div className="login">
                   <div style={{padding: "20%"}} className="card">
                   <h6 style={{fontWeight: "bold", color: "rgb(38, 156, 143)", marginBottom: "10%" , fontSize: 16}}>{ isLogin ? "Log into your account" : "Create New Account"}</h6>
-                  {state.errors && (
-                            <p className="left-align" style={{color: "red", marginRight: "40%"}}>{state.errors}</p>
+                  {formState.errors && (
+                            <p className="left-align" style={{color: "red", marginRight: "40%"}}>{formState.errors}</p>
                         )}
                    {!isLogin && (
                        <>
@@ -112,9 +113,15 @@ export default function UserForm({isLogin}) {
                             style={{fontSize: 12}} onChange={handleChange} />
                     </div>
                     <div className="password">
-                        <input type="password" className="validate" name="password" placeholder="Password" value={password}
+                        <input type="password" className="validate" name="password" placeholder="p@$$w0rd" value={password}
                             style={{fontSize: 12}} onChange={handleChange} />
                     </div>
+                    {!isLogin && (
+                    <div className="passwordConf">
+                        <input type="password" className="validate" name="passwordConf" placeholder="p@$$w0rd" value={password}
+                            style={{fontSize: 12}} onChange={handleChange} />
+                    </div>
+                    )}
                     <div className="submit">
                     <input style={{width: "100%", fontSize: "12px", marginTop: "5%"}}
                        className="waves-effect waves-light btn" type="submit" value={isLogin ? "Login"

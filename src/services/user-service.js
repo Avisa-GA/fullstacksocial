@@ -1,74 +1,63 @@
 import axios from 'axios';
+import { signUp, login, database, signOut } from "./firebase";
 const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dzsyqjq3i/image/upload"
 const USER_URL = "https://social-app-end.herokuapp.com/api/users"
 
 
-async function allUsers() {
-  //  const url = uid ? URL + "?uid=" + uid : URL;
-   const response = await fetch(USER_URL);
-   return response.json();
-}
-// *************************** Followers
-async function allFolowers(user) {
-  const token = await user.getIdToken();
-    const response = await fetch(USER_URL + "/followers", {
-      method: "GET",
-      headers: {
-        "Content-Type": "Application/json",
-        "authorization": "bearer " + token
-      }
-    });
-    return response.json();
-}
-
-async function follow(id, token) {
-  return fetch(USER_URL + "/" + id + "/follow", {
-      method: "POST",
-      headers: {
-          "authorization": "bearer " + token
-      }
+function uploadAvatar(data) {
+  return axios({
+    url: CLOUDINARY_URL,
+    method: "POST",
+    data
   });
 }
+  
+function createUser({ firstName, lastName, email, password, image }) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { user } = await signUp(email, password);
+      signOut();
 
-async function unfollow(id, token) {
-  return fetch(USER_URL + "/" + id + "/unfollow", {
-      method: "POST",
-      headers: {
-          "authorization": "bearer " + token
+      let avatar;
+
+      if (image) {
+        const form = new FormData();
+        form.append("file", image);
+        form.append("upload_preset", "ljxjnqss");
+        avatar = await uploadAvatar(form)
       }
-  });
+
+      await user.updateProfile({
+        displayName: `${firstName} ${lastName}`,
+        photoURL: avatar ? avatar.data.secure_url : ''
+      });
+
+      await login(email, password);
+
+      await database.ref(`/users/${user.uid}`).set({
+        firstName,
+        lastName,
+        email,
+        avatarUrl: avatar ? avatar.data.secure_url : ''
+      });
+
+      resolve(true);
+
+    } catch (error) {
+      reject(error)
+    }
+  })
+} 
+
+function loginUser(email, password) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { user } = await login(email, password);
+      resolve(user)
+    } catch (error) {
+      reject(error);
+    }
+  })
 }
-// *********************************
 
-async function getLoggedInUser(user) {
-    const token = await user.getIdToken();
-    return axios({
-      method: "GET",
-      url: USER_URL + "/login",
-      headers: {
-        authorization: "bearer " + token
-      }
-    });
-  }
-  
-  function uploadAvatar(data) {
-    return axios({
-      url: CLOUDINARY_URL,
-      method: "POST",
-      data
-    });
-  }
-  
-  function createUser(data, token) {
-    return axios({
-      url: USER_URL + "/signup",
-      method: "POST",
-      headers: {
-        authorization: "bearer " + token
-      },
-      data
-    });
-  }
-  
-  export { getLoggedInUser, uploadAvatar, createUser, allUsers, follow, unfollow, allFolowers };
-  
+export { createUser, loginUser };

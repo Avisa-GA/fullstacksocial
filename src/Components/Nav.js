@@ -1,6 +1,5 @@
-import React, {useContext} from "react";
-import { AuthContext } from "../services/contex";
-import { Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
+import { useAuth } from "../services/contex";
 import SearchIcon from '@material-ui/icons/Search';
 import HomeIcon from '@material-ui/icons/Home';
 import PersonIcon from '@material-ui/icons/Person';
@@ -11,7 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import {signOut} from '../services/firebase';
-import { useHistory } from "react-router-dom";
+import defaultImg from '../assets/images/login.jpg'
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -27,10 +27,14 @@ export default function Nav({userState}) {
 
 const classes = useStyles();
 const history = useHistory();
+const { 
+  state: { user }
+} = useAuth();
 
 
 async function handleSignout() {
   await signOut();
+  history.push('/login');
 }
 
 
@@ -57,16 +61,20 @@ return (
     </Typography>
     <Typography style={{marginRight: "1%"}} className={classes.title}>
                 <ul className="right-align" style={{display: "flex", listStyle: "none", alignItems: "center"}}>
-                   {userState ? (
+                   {user ? (
                        <>
-                       <li>Welcome, {userState.firstName}</li>
+                       <li>Welcome, {' '} {user.displayName ? user.displayName.split(" ")[0] : 'User'}</li>
+                       <li>|</li>
                        <li style={{color: "white", cursor: "pointer"}} onClick={handleSignout}>
-                       <Link style={{color: "white", fontWeight: "bold"}} to="/login">Logout </Link>
+                       Logout 
                        </li>
                        <br />
                        <br />
                        <li>
-                           <img style={{width: 38, height: 38, borderRadius: "50%"}} src={userState.avatarUrl} alt="" />
+                           <img style={{width: 38, height: 38, borderRadius: "50%"}} 
+                           src={user.photoURL ? user.photoURL : defaultImg } 
+                           alt={user.displayName ? user.displayName : "User"} 
+                           />
                        </li>
                        </>  
                    ) : (
