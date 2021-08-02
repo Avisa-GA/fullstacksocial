@@ -62,7 +62,7 @@ export default function PostForm(props) {
   }
   return (
     <div className="card-action">
-      <form>
+      <form onSubmit={handleSubmit}>
           {message && (<p style={{color: 'red'}}>{message}</p>)}
         <input
           type="text"
@@ -98,7 +98,7 @@ export default function PostForm(props) {
           type="submit"
           style={{ marginLeft: "88%" }}
           className="btn white-text pink darken-2"
-          onClick={handleSubmit}
+          // onClick={handleSubmit}
         >
           post
         </button>

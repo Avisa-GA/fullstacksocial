@@ -12,6 +12,7 @@ import Search from "./pages/Search";
 import Profile from "./pages/Profile";
 
 function App() {
+    
   const [postsState, setPostsState] = useState({ posts: [] });
   const POST_URL = "https://social-app-end.herokuapp.com/post";
 
@@ -38,7 +39,7 @@ function App() {
         },
         body: JSON.stringify(formInput),
       }).then((res) => res.json());
-      console.log(posts);
+      
       setPostsState({ posts });
     } catch (error) {
       console.log(error);
