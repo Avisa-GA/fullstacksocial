@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import ImageIcon from "@material-ui/icons/Image";
 import { uploadPostImage } from "../services/post-service";
-import { auth } from '../services/firebase'
 
 export default function PostForm(props) {
   const [message, setMessage] = useState("");
@@ -48,12 +47,11 @@ export default function PostForm(props) {
     e.preventDefault();
 
     const { text } = formState;
-    const token = await auth.currentUser.getIdToken();
     
     if (!text) {
       setMessage("Enter all fields");
     } else {
-      props.handleAdd({ ...formState, imageUrl: imgFromCloud.data.secure_url }, token);
+      props.handleAdd({ ...formState, imageUrl: imgFromCloud.data.secure_url });
       setFormState({
         text: "",
         imageUrl: "",
