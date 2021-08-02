@@ -1,6 +1,6 @@
 import React from "react";
 
-import UserForm from "../Components/UserForm";
+import UserForm from "../components/UserForm";
 
 
 export default function Signup(props) {

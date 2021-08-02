@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { createUser, loginUser } from "../services/user-service";
 import { useHistory } from "react-router-dom";
+import GoogleButton from "./GoogleButton";
 
 export default function UserForm({isLogin}) {
 
@@ -126,7 +127,7 @@ export default function UserForm({isLogin}) {
                        className="waves-effect waves-light btn" type="submit" value={isLogin ? "Login"
                          : "Signup" } />
                     </div>
-
+                     <GoogleButton />
                   </div>
                   </div>
                   </form>

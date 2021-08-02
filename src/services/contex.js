@@ -1,5 +1,4 @@
 
-import { func } from "prop-types";
 import { createContext, useContext, useReducer, useEffect } from "react";
 import { auth } from './firebase';
 
