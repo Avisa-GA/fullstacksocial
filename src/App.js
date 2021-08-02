@@ -46,7 +46,7 @@ function App() {
     }
   }
   //  ! ********************************************* Delete
-  async function handleDelete(postId, token) {
+  async function deletePost(postId, token) {
     try {
       const posts = fetch(POST_URL + "/" + postId, {
         method: "DELETE",
@@ -60,6 +60,8 @@ function App() {
     }
   }
 
+
+
   return (
     <div className="App">
       <AuthProvider>
@@ -68,7 +70,7 @@ function App() {
           <Route exact path="/">
             <Index 
                posts={postsState.posts}
-               handleDelete={handleDelete}
+               deletePost={deletePost}
                handleAdd={handleAdd}
             />
           </Route>
