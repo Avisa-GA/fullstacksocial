@@ -29,37 +29,31 @@ function App() {
     }
   }
   // * ************************************ Create
-  async function handleAdd(formInput, token) {
-    try {
-      const posts = await fetch(POST_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "Application/json",
-          authorization: "bearer " + token,
-        },
-        body: JSON.stringify(formInput),
-      }).then((res) => res.json());
-      
-      setPostsState({ posts });
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  async function handleAdd(formInputs) {
+		try {
+			const posts = await fetch(POST_URL, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'Application/json',
+				},
+				body: JSON.stringify(formInputs),
+			}).then((res) => res.json());
+			setPostsState({ posts });
+		} catch (error) {
+			console.log(error);
+		}
+	}
   //  ! ********************************************* Delete
-  async function deletePost(postId, token) {
-    try {
-      const posts = fetch(POST_URL + "/" + postId, {
-        method: "DELETE",
-        headers: {
-          authorization: "bearer " + token,
-        },
-      }).then((res) => res.json());
-      setPostsState({ posts });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
+	async function handleDelete(postId) {
+		try {
+			const posts = await fetch(`${POST_URL}/${postId}`, {
+				method: 'DELETE',
+			}).then((res) => res.json());
+			setPostsState({ posts });
+		} catch (error) {
+			console.log(error);
+		}
+	}
 
 
   return (
@@ -70,7 +64,7 @@ function App() {
           <Route exact path="/">
             <Index 
                posts={postsState.posts}
-               deletePost={deletePost}
+               handleDelete={handleDelete}
                handleAdd={handleAdd}
             />
           </Route>
